@@ -9,7 +9,7 @@ filename <- "C:\\Users\\pablo\\OneDrive\\Escritorio\\R proyects\\Multiprop_Encue
 
 EM21 <- readRDS(filename)
 1+1
-
+z
 
 
 
