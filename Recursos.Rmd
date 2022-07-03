@@ -1,0 +1,14 @@
+---
+title: "Recursos"
+output: 
+  html_document: 
+    keep_md: yes
+date: '2022-07-03'
+---
+
+## Recursos
+
+
+**Video lanzamiento**: https://www.youtube.com/watch?v=TA6sDqzpIgc&t=12643s
+
+**Sitio web**
