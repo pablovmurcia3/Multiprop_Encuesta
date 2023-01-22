@@ -8,7 +8,7 @@ file.choose()
 filename <- "C:\\Users\\pablo\\OneDrive\\Escritorio\\R proyects\\Multiprop_Encuesta\\Data\\EM2021\\EM2021_RDS.rds"
 
 EM21 <- readRDS(filename)
-
+f <- 1
 
 # ViviendA
 length(unique(EM21$DIRECTORIO))
