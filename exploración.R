@@ -5,10 +5,12 @@ library(dplyr)
 ################################################################################
 file.choose()
 
-filename <- "C:\\Users\\pablo\\OneDrive\\Escritorio\\R proyects\\Multiprop_Encuesta\\Data\\EM2021\\EM2021_RDS.rds"
-
+filename <- "C:\\Users\\pablo\\OneDrive\\Escritorio\\R proyects\\Multiprop_Encuesta\\Data\\EM2021\\EM2021.rds"
 EM21 <- readRDS(filename)
-f <- 1
+
+filename <- "C:\\Users\\pablo\\OneDrive\\Escritorio\\R proyects\\Multiprop_Encuesta\\Data\\EM2021\\EM2021_PLUS.rds"
+EM21_plus <- readRDS(filename)
+
 
 # ViviendA
 length(unique(EM21$DIRECTORIO))
@@ -17,11 +19,21 @@ unique(EM21$DIRECTORIO)
 
 a <- EM21[EM21$DIRECTORIO == 323974,]
 
+
 a$DIRECTORIO_HOG
 
 # Hogares
 unique(EM21$DIRECTORIO_HOG)
 length(unique(EM21$DIRECTORIO_HOG))
+
+# Personas
+unique(EM21$DIRECTORIO_PER)
+length(unique(EM21$DIRECTORIO_PER))
+
+
+
+
+
 
 
 
@@ -58,7 +70,7 @@ EM21$MPIO_NAME[EM21$MPIO == 25295] <- "Gachancipá"
 ################################################################################
                               #  Mercado laboral
 ################################################################################
-  sum(EM21$, na.rm = TRUE)
+sum(EM21$, na.rm = TRUE)
 EM21$FL
 class(EM21$NPCEP4)
 
@@ -91,6 +103,8 @@ variable <- sapply(list, function(x) {
   
   t <- c(td_g, td_h, td_m, td_j)
 }) 
+
+
 
 data.frame(t(variable))
 
