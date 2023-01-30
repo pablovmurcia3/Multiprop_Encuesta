@@ -15,11 +15,7 @@ EM21_plus <- readRDS(filename)
 # ViviendA
 length(unique(EM21$DIRECTORIO))
 unique(EM21$DIRECTORIO)
-
-
 a <- EM21[EM21$DIRECTORIO == 323974,]
-
-
 a$DIRECTORIO_HOG
 
 # Hogares
@@ -27,13 +23,131 @@ unique(EM21$DIRECTORIO_HOG)
 length(unique(EM21$DIRECTORIO_HOG))
 
 # Personas
-unique(EM21$DIRECTORIO_PER)
 length(unique(EM21$DIRECTORIO_PER))
 
 
+length(unique(EM21_plus$directorio_per))
+
+EM21$DIRECTORIO_PER[1:10]
+EM21$DIRECTORIO_HOG[1:10]
+
+EM21_plus$directorio_hog[1:10]
+EM21_plus$directorio_per[1:10]
+
+
+names(EM21_plus)[grep("directorio_per", names(EM21_plus))] <- "DIRECTORIO_PER"
+
+EM21F <- merge(EM21, EM21_plus, 
+                  by = c("DIRECTORIO_PER"),
+                  all = TRUE)
+
+
+#sectores 
+
+
+  
+EM21F$NPCKP16_COD4_c <- sprintf("%04d", as.numeric(EM21F$NPCKP16_COD4))
+
+EM21F$DIV <- substr(EM21F$NPCKP16_COD4_c,1,2)
+
+a <- EM21F[c("NPCKP16_COD4","DIV")]
+
+
+length(unique(EM21F$DIV))
 
 
 
+EM21F$DIV[EM21F$DIV == "00"] <- "00"
+EM21F$DIV[EM21F$DIV == "01"] <- "Agricultura, ganadería, caza y actividades de servicios conexas" 
+EM21F$DIV[EM21F$DIV == "02"] <- "Silvicultura y extracción de madera"
+EM21F$DIV[EM21F$DIV == "03"] <- "Pesca y acuicultura"
+EM21F$DIV[EM21F$DIV == "05"] <- "Extracción de carbón de piedra y lignito"
+EM21F$DIV[EM21F$DIV == "06"] <- "00"
+EM21F$DIV[EM21F$DIV == "07"] <- "00"
+EM21F$DIV[EM21F$DIV == "08"] <- "00"
+EM21F$DIV[EM21F$DIV == "09"] <- "00"
+EM21F$DIV[EM21F$DIV == "10"] <- "00"
+EM21F$DIV[EM21F$DIV == "11"] <- ", ganadería, caza y actividades de servicios conexas" 
+EM21F$DIV[EM21F$DIV == "12"] <- "00"
+EM21F$DIV[EM21F$DIV == "13"] <- "00"
+EM21F$DIV[EM21F$DIV == "14"] <- "00"
+EM21F$DIV[EM21F$DIV == "15"] <- "00"
+EM21F$DIV[EM21F$DIV == "16"] <- "00"
+EM21F$DIV[EM21F$DIV == "17"] <- "00"
+EM21F$DIV[EM21F$DIV == "18"] <- "00"
+EM21F$DIV[EM21F$DIV == "19"] <- "00"
+EM21F$DIV[EM21F$DIV == "20"] <- "00"
+EM21F$DIV[EM21F$DIV == "21"] <- ", ganadería, caza y actividades de servicios conexas" 
+EM21F$DIV[EM21F$DIV == "22"] <- "00"
+EM21F$DIV[EM21F$DIV == "23"] <- "00"
+EM21F$DIV[EM21F$DIV == "24"] <- "00"
+EM21F$DIV[EM21F$DIV == "25"] <- "00"
+EM21F$DIV[EM21F$DIV == "26"] <- "00"
+EM21F$DIV[EM21F$DIV == "27"] <- "00"
+EM21F$DIV[EM21F$DIV == "28"] <- "00"
+EM21F$DIV[EM21F$DIV == "29"] <- "00"
+EM21F$DIV[EM21F$DIV == "30"] <- "00"
+EM21F$DIV[EM21F$DIV == "31"] <- ", ganadería, caza y actividades de servicios conexas" 
+EM21F$DIV[EM21F$DIV == "32"] <- "00"
+EM21F$DIV[EM21F$DIV == "33"] <- "00"
+EM21F$DIV[EM21F$DIV == "35"] <- "00"
+EM21F$DIV[EM21F$DIV == "36"] <- "00"
+EM21F$DIV[EM21F$DIV == "37"] <- "00"
+EM21F$DIV[EM21F$DIV == "38"] <- "00"
+EM21F$DIV[EM21F$DIV == "39"] <- "00"
+EM21F$DIV[EM21F$DIV == "41"] <- ", ganadería, caza y actividades de servicios conexas" 
+EM21F$DIV[EM21F$DIV == "42"] <- "00"
+EM21F$DIV[EM21F$DIV == "43"] <- "00"
+EM21F$DIV[EM21F$DIV == "44"] <- "00"
+EM21F$DIV[EM21F$DIV == "45"] <- "00"
+EM21F$DIV[EM21F$DIV == "46"] <- "00"
+EM21F$DIV[EM21F$DIV == "47"] <- "00"
+EM21F$DIV[EM21F$DIV == "49"] <- "00"
+EM21F$DIV[EM21F$DIV == "50"] <- "00"
+EM21F$DIV[EM21F$DIV == "51"] <- ", ganadería, caza y actividades de servicios conexas" 
+EM21F$DIV[EM21F$DIV == "52"] <- "00"
+EM21F$DIV[EM21F$DIV == "53"] <- "00"
+EM21F$DIV[EM21F$DIV == "55"] <- "00"
+EM21F$DIV[EM21F$DIV == "56"] <- "00"
+EM21F$DIV[EM21F$DIV == "58"] <- "00"
+EM21F$DIV[EM21F$DIV == "59"] <- "00"
+EM21F$DIV[EM21F$DIV == "60"] <- "00"
+EM21F$DIV[EM21F$DIV == "61"] <- ", ganadería, caza y actividades de servicios conexas" 
+EM21F$DIV[EM21F$DIV == "62"] <- "00"
+EM21F$DIV[EM21F$DIV == "63"] <- "00"
+EM21F$DIV[EM21F$DIV == "64"] <- "00"
+EM21F$DIV[EM21F$DIV == "65"] <- "00"
+EM21F$DIV[EM21F$DIV == "66"] <- "00"
+EM21F$DIV[EM21F$DIV == "68"] <- "00"
+EM21F$DIV[EM21F$DIV == "69"] <- "00"
+EM21F$DIV[EM21F$DIV == "70"] <- "00"
+EM21F$DIV[EM21F$DIV == "71"] <- ", ganadería, caza y actividades de servicios conexas" 
+EM21F$DIV[EM21F$DIV == "72"] <- "00"
+EM21F$DIV[EM21F$DIV == "73"] <- "00"
+EM21F$DIV[EM21F$DIV == "74"] <- "00"
+EM21F$DIV[EM21F$DIV == "75"] <- "00"
+EM21F$DIV[EM21F$DIV == "77"] <- "00"
+EM21F$DIV[EM21F$DIV == "78"] <- "00"
+EM21F$DIV[EM21F$DIV == "79"] <- "00"
+EM21F$DIV[EM21F$DIV == "80"] <- "00"
+EM21F$DIV[EM21F$DIV == "81"] <- ", ganadería, caza y actividades de servicios conexas" 
+EM21F$DIV[EM21F$DIV == "82"] <- "00"
+EM21F$DIV[EM21F$DIV == "83"] <- "00"
+EM21F$DIV[EM21F$DIV == "84"] <- "00"
+EM21F$DIV[EM21F$DIV == "85"] <- "00"
+EM21F$DIV[EM21F$DIV == "86"] <- "00"
+EM21F$DIV[EM21F$DIV == "87"] <- "00"
+EM21F$DIV[EM21F$DIV == "88"] <- "00"
+EM21F$DIV[EM21F$DIV == "90"] <- ", ganadería, caza y actividades de servicios conexas" 
+EM21F$DIV[EM21F$DIV == "91"] <- ", ganadería, caza y actividades de servicios conexas" 
+EM21F$DIV[EM21F$DIV == "92"] <- "00"
+EM21F$DIV[EM21F$DIV == "93"] <- "00"
+EM21F$DIV[EM21F$DIV == "94"] <- "00"
+EM21F$DIV[EM21F$DIV == "95"] <- "00"
+EM21F$DIV[EM21F$DIV == "96"] <- "00"
+EM21F$DIV[EM21F$DIV == "97"] <- "00"
+EM21F$DIV[EM21F$DIV == "98"] <- "00"
+EM21F$DIV[EM21F$DIV == "99"] <- "00"
 
 
 
