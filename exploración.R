@@ -28,12 +28,7 @@ length(unique(EM21$DIRECTORIO_PER))
 
 length(unique(EM21_plus$directorio_per))
 
-EM21$DIRECTORIO_PER[1:10]
-EM21$DIRECTORIO_HOG[1:10]
-
-EM21_plus$directorio_hog[1:10]
-EM21_plus$directorio_per[1:10]
-
+#  Unión de las bases
 
 names(EM21_plus)[grep("directorio_per", names(EM21_plus))] <- "DIRECTORIO_PER"
 
@@ -45,14 +40,18 @@ EM21F <- merge(EM21, EM21_plus,
 #sectores 
 
 
-  
 EM21F$NPCKP16_COD4_c <- sprintf("%04d", as.numeric(EM21F$NPCKP16_COD4))
 
 EM21F$DIV <- substr(EM21F$NPCKP16_COD4_c,1,2)
 
+sort(unique(EM21F$NPCKP16_COD4))
+
 
 
 sort(unique(EM21F$DIV))
+
+table(EM21F$NPCKP16_COD4)
+table(EM21F$DIV)
 
 
 
@@ -203,6 +202,67 @@ EM21F$SEC[EM21F$DIV == "99"] <- "Actividades de organizaciones y entidades extra
 
 
 sort(table(EM21F$SEC))
+
+
+
+######
+
+EM_JOV <- EM21F[EM21F$NPCEP4 >= 14 & EM21F$NPCEP4 <= 28 ,]
+
+
+sort(table(EM_JOV$SEC))
+
+library(dplyr)
+
+tablita_sec <- EM_JOV %>% group_by(SEC) %>% summarise(no = length(SEC))  %>% arrange(no)
+
+
+tablita_div <- EM_JOV %>% group_by(DIV_n) %>% summarise(no = length(DIV_n))  %>% arrange(no)
+
+
+tablita_div_c <- EM_JOV %>% filter(DIV_n ==  "Comercio al por menor (incluso el comercio al por menor de combustibles), excepto el de vehículos automotores y motocicletas") %>%
+  group_by(NPCKP16_COD4)%>% summarise(no = length(DIV_n))  %>% arrange(no)
+
+
+tablita_div_a <- EM_JOV %>% filter(DIV_n ==  "Actividades de servicios de comidas y bebidas") %>%
+  group_by(NPCKP16_COD4)%>% summarise(no = length(DIV_n))  %>% arrange(no)
+
+
+tablita_div_OFI <- EM_JOV %>% filter(DIV_n ==  "Actividades administrativas y de apoyo de oficina y otras actividades de apoyo a las empresas") %>%
+  group_by(NPCKP16_COD4)%>% summarise(no = length(DIV_n))  %>% arrange(no)
+  
+
+sum(tablita_div_a$no)
+
+
+tablita_CLASE <- EM_JOV %>% group_by(NPCKP16_COD4)%>% summarise(no = length(DIV_n))  %>% arrange(no)
+
+
+tablita_CLASE <- EM_JOV %>% filter() %>% group_by(NPCKP16_COD4)%>% summarise(no = length(DIV_n))  %>% arrange(no)
+
+
+###############################################################################
+
+Comercio al por menor (incluso el comercio al por menor de combustibles), excepto el de vehículos automotores y motocicletas
+Actividades de servicios de comidas y bebidas
+Actividades administrativas y de apoyo de oficina y otras actividades de apoyo a las empresas
+Actividades de atención de la salud humana
+
+
+
+
+Desagregadas por clase
+
+
+
+
+
+###############################################################################
+
+
+
+
+
 
 
 ################################################################################
