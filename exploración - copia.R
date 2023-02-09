@@ -367,3 +367,6 @@ write.xlsx(tabla1, 'C:\\Users\\karme\\Desktop\\Prácticas\\Datos\\Encuesta Multi
 
 tabla2 <- bog %>% group_by(bog$NOMBRE_LOCALIDAD, bog$NVCBP11AA)  %>% summarise(Promedio = mean(NHCCPCTRL2, na.rm = T))
 write.xlsx(tabla1, 'C:\\Users\\karme\\Desktop\\Prácticas\\Datos\\Encuesta Multiproposito', colNames= TRUE, overwrite = TRUE)
+
+EM21F$CLASE <- vector(mode='character',length=dim(EM21F)[1])
+EM21F$CLASE[EM21F$NPCKP23>0] <- "Clase alta"
