@@ -44,17 +44,6 @@ EM21F$NPCKP16_COD4_c <- sprintf("%04d", as.numeric(EM21F$NPCKP16_COD4))
 
 EM21F$DIV <- substr(EM21F$NPCKP16_COD4_c,1,2)
 
-sort(unique(EM21F$NPCKP16_COD4))
-
-
-
-sort(unique(EM21F$DIV))
-
-table(EM21F$NPCKP16_COD4)
-table(EM21F$DIV)
-
-
-
 EM21F$DIV_n <- vector(mode='character',length=dim(EM21F)[1])
 
 EM21F$DIV_n[EM21F$DIV == "00"] <- "00"
@@ -200,140 +189,69 @@ EM21F$SEC[EM21F$DIV == "97"| EM21F$DIV == "98"] <- "Actividades de los hogares e
 
 EM21F$SEC[EM21F$DIV == "99"] <- "Actividades de organizaciones y entidades extraterritoriales"
 
+######
+# Municipios
 
-sort(table(EM21F$SEC))
+EM21F$MPIO_NAME <- vector(mode='character',length=dim(EM21)[1])
+EM21F$MPIO_NAME[EM21F$MPIO == 11001] <- "Bogotá"
+EM21F$MPIO_NAME[EM21F$MPIO == 25740] <- "Sibaté"
+EM21F$MPIO_NAME[EM21F$MPIO == 25473] <- "Mosquera"
+EM21F$MPIO_NAME[EM21F$MPIO == 25290] <- "Fusagasugá"
+EM21F$MPIO_NAME[EM21F$MPIO == 25214] <- "Cota"
+EM21F$MPIO_NAME[EM21F$MPIO == 25175] <- "Chía"
+EM21F$MPIO_NAME[EM21F$MPIO == 25758] <- "Sopó"
+EM21F$MPIO_NAME[EM21F$MPIO == 25785] <- "Tabio"
+EM21F$MPIO_NAME[EM21F$MPIO == 25898] <- "Zipacón"
+EM21F$MPIO_NAME[EM21F$MPIO == 25754] <- "Soacha"
+EM21F$MPIO_NAME[EM21F$MPIO == 25126] <- "Cajicá"
+EM21F$MPIO_NAME[EM21F$MPIO == 25817] <- "Tocancipá"
+EM21F$MPIO_NAME[EM21F$MPIO == 25430] <- "Madrid"
+EM21F$MPIO_NAME[EM21F$MPIO == 25286] <- "Funza"
+EM21F$MPIO_NAME[EM21F$MPIO == 25260] <- "El Rosal"
+EM21F$MPIO_NAME[EM21F$MPIO == 25099] <- "Bojacá"
+EM21F$MPIO_NAME[EM21F$MPIO == 25799] <- "Tenjo"
+EM21F$MPIO_NAME[EM21F$MPIO == 25899] <- "Zipaquira"
+EM21F$MPIO_NAME[EM21F$MPIO == 25269] <- "Facatativa"
+EM21F$MPIO_NAME[EM21F$MPIO == 25769] <- "Subachoque"
+EM21F$MPIO_NAME[EM21F$MPIO == 25377] <- "La Calera"
+EM21F$MPIO_NAME[EM21F$MPIO == 25295] <- "Gachancipá"
+
+
+
+list <- split(EM21F,EM21F$MPIO_NAME)
+
+EM_MAD <- as.data.frame(list$Madrid)
+EM_FUN <- as.data.frame(list$Funza)
+EM_MOS <- as.data.frame(list$Mosquera)
+EM_ROS <- as.data.frame(list$"El Rosal")
+EM_FAC <- as.data.frame(list$Facatativa)
+
+library(dplyr)
+
+tablita_MAD <- EM_MAD %>% filter(NPCKPA46 == 1) %>% group_by(DIV_n) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
+
+tablita_FUN <- EM_FUN %>% filter(NPCKPA46 == 1) %>% group_by(DIV_n) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
+
+tablita_MOS <- EM_MOS %>% filter(NPCKPA46 == 1) %>% group_by(DIV_n) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
+
+tablita_ROS <- EM_ROS %>% filter(NPCKPA46 == 1) %>% group_by(DIV_n) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
+
+tablita_FAC <- EM_FAC %>% filter(NPCKPA46 == 1) %>% group_by(DIV_n) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
+
+
+
+
+tablita_MAD <- EM_MAD %>% filter(NPCKPA46 == 1) %>% group_by(NPCKP16_COD4) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
+
+tablita_FUN <- EM_FUN %>% filter(NPCKPA46 == 1) %>% group_by(NPCKP16_COD4) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
+
+tablita_MOS <- EM_MOS %>% filter(NPCKPA46 == 1) %>% group_by(NPCKP16_COD4) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
+
+tablita_ROS <- EM_ROS %>% filter(NPCKPA46 == 1) %>% group_by(NPCKP16_COD4) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
+
+tablita_FAC <- EM_FAC %>% filter(NPCKPA46 == 1) %>% group_by(NPCKP16_COD4) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
 
 
 
 ######
-
-EM_JOV <- EM21F[EM21F$NPCEP4 >= 14 & EM21F$NPCEP4 <= 28 ,]
-
-
-sort(table(EM_JOV$SEC))
-
-library(dplyr)
-
-tablita_sec <- EM_JOV %>% group_by(SEC) %>% summarise(no = sum(FEX_C))  %>% arrange(no)
-
-
-tablita_div <- EM_JOV %>% group_by(DIV_n) %>% summarise(no = sum(FEX_C))  %>% arrange(no)
-
-
-tablita_div_c <- EM_JOV %>% filter(DIV_n ==  "Comercio al por menor (incluso el comercio al por menor de combustibles), excepto el de vehículos automotores y motocicletas") %>%
-  group_by(NPCKP16_COD4)%>% summarise(no = length(DIV_n))  %>% arrange(no)
-
-
-tablita_div_a <- EM_JOV %>% filter(DIV_n ==  "Actividades de servicios de comidas y bebidas") %>%
-  group_by(NPCKP16_COD4)%>% summarise(no = length(DIV_n))  %>% arrange(no)
-
-
-tablita_div_OFI <- EM_JOV %>% filter(DIV_n ==  "Actividades administrativas y de apoyo de oficina y otras actividades de apoyo a las empresas") %>%
-  group_by(NPCKP16_COD4)%>% summarise(no = length(DIV_n))  %>% arrange(no)
-  
-
-sum(tablita_div_a$no)
-
-
-tablita_CLASE <- EM_JOV %>% group_by(NPCKP16_COD4)%>% summarise(no = sum(FEX_C))  %>% arrange(no)
-
-tablita_CLASE <- EM_JOV %>% filter() %>% group_by(NPCKP16_COD4)%>% summarise(no = length(DIV_n))  %>% arrange(no)
-
-
-##########
-#####################################################################
-
-#Comercio al por menor (incluso el comercio al por menor de combustibles), excepto el de vehículos automotores y motocicletas
-#Actividades de servicios de comidas y bebidas
-#Actividades administrativas y de apoyo de oficina y otras actividades de apoyo a las empresas
-#Actividades de atención de la salud humana
-
-
-
-
-#Desagregadas por clase
-
-
-
-
-
-###############################################################################
-
-
-
-
-
-
-
-################################################################################
-                                #  diccionarios
-################################################################################
-
-
-EM21$MPIO_NAME <- vector(mode='character',length=dim(EM21)[1])
-EM21$MPIO_NAME[EM21$MPIO == 11001] <- "Bogotá"
-EM21$MPIO_NAME[EM21$MPIO == 25740] <- "Sibaté"
-EM21$MPIO_NAME[EM21$MPIO == 25473] <- "Mosquera"
-EM21$MPIO_NAME[EM21$MPIO == 25290] <- "Fusagasugá"
-EM21$MPIO_NAME[EM21$MPIO == 25214] <- "Cota"
-EM21$MPIO_NAME[EM21$MPIO == 25175] <- "Chía"
-EM21$MPIO_NAME[EM21$MPIO == 25758] <- "Sopó"
-EM21$MPIO_NAME[EM21$MPIO == 25785] <- "Tabio"
-EM21$MPIO_NAME[EM21$MPIO == 25898] <- "Zipacón"
-EM21$MPIO_NAME[EM21$MPIO == 25754] <- "Soacha"
-EM21$MPIO_NAME[EM21$MPIO == 25126] <- "Cajicá"
-EM21$MPIO_NAME[EM21$MPIO == 25817] <- "Tocancipá"
-EM21$MPIO_NAME[EM21$MPIO == 25430] <- "Madrid"
-EM21$MPIO_NAME[EM21$MPIO == 25286] <- "Funza"
-EM21$MPIO_NAME[EM21$MPIO == 25260] <- "El Rosal"
-EM21$MPIO_NAME[EM21$MPIO == 25099] <- "Bojacá"
-EM21$MPIO_NAME[EM21$MPIO == 25799] <- "Tenjo"
-EM21$MPIO_NAME[EM21$MPIO == 25899] <- "Zipaquira"
-EM21$MPIO_NAME[EM21$MPIO == 25269] <- "Facatativa"
-EM21$MPIO_NAME[EM21$MPIO == 25769] <- "Subachoque"
-EM21$MPIO_NAME[EM21$MPIO == 25377] <- "La Calera"
-EM21$MPIO_NAME[EM21$MPIO == 25295] <- "Gachancipá"
-
-
-################################################################################
-                              #  Mercado laboral
-################################################################################
-sum(EM21$, na.rm = TRUE)
-EM21$FL
-class(EM21$NPCEP4)
-
-
-sort(unique(EM21[EM21$FL == 1,]$NPCEP4))
-
-# por municipios
-
-list <- split(EM21,EM21$MPIO_NAME) 
-variable <- sapply(list, function(x) {
-  x <- x[x$CLASE == 1,]
-  is.na(x$DES) <- 0
-  is.na(x$FL) <- 0
-  ft <- sum(x[x$FL == 1,]$FEX_C, na.rm = TRUE)
-  d <- sum(x[x$DES == 1,]$FEX_C, na.rm = TRUE)
-  td_g <- d/ft*100
-  
-  ft_h <- sum(x[x$FL == 1 & x$NPCEP5 == 1 ,]$FEX_C, na.rm = TRUE)
-  d_h <- sum(x[x$DES == 1 & x$NPCEP5 == 1 ,]$FEX_C, na.rm = TRUE)
-  td_h <- d_h/ft_h*100
-  
-  ft_m <- sum(x[x$FL == 1 & x$NPCEP5 == 2,]$FEX_C, na.rm = TRUE)
-  d_m <- sum(x[x$DES == 1 & x$NPCEP5 == 2,]$FEX_C, na.rm = TRUE)
-  td_m <- d_m/ft_m*100
-  
-  ft_j <- sum(x[x$FL == 1 & x$NPCEP4 <=28,]$FEX_C, na.rm = TRUE)
-  d_j <- sum(x[x$DES == 1 & x$NPCEP4 <=28,]$FEX_C, na.rm = TRUE)
-  td_j <- d_j/ft_j*100
-  
-  
-  t <- c(td_g, td_h, td_m, td_j)
-}) 
-
-
-
-data.frame(t(variable))
-
 
