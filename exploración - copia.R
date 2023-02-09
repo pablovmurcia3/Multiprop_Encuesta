@@ -370,3 +370,6 @@ write.xlsx(tabla1, 'C:\\Users\\karme\\Desktop\\Prácticas\\Datos\\Encuesta Multi
 
 EM21F$CLASE <- vector(mode='character',length=dim(EM21F)[1])
 EM21F$CLASE[EM21F$NPCKP23>0] <- "Clase alta"
+
+tabla2 <- bog %>% group_by(bog$NOMBRE_LOCALIDAD, bog$NVCBP16) %>% summarise(Promedio = sum(NHCCPCTRL2, na.rm = T))
+
