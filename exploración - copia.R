@@ -357,4 +357,7 @@ tabla_a <- EM21F %>% group_by(EM21F$MPIO_NAME) %>% summarise(Mean = mean(NPCKP23
             # Condiciones de Vida
 ###############################################################################
 
+library(openxlsx)
+tabla1 <- EM21F %>% group_by(EM21F$MPIO_NAME, EM21F$NVCBP11AA)  %>% summarise(Promedio = mean(NHCCPCTRL2, na.rm = T))
+write.xlsx(tabla1, 'C:\\Users\\karme\\Desktop\\Prácticas\\Datos\\Encuesta Multiproposito', colNames= TRUE, overwrite = TRUE)
 
