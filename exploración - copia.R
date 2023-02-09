@@ -270,29 +270,29 @@ Desagregadas por clase
 ################################################################################
 
 
-EM21$MPIO_NAME <- vector(mode='character',length=dim(EM21)[1])
-EM21$MPIO_NAME[EM21$MPIO == 11001] <- "Bogota"
-EM21$MPIO_NAME[EM21$MPIO == 25740] <- "Sibate"
-EM21$MPIO_NAME[EM21$MPIO == 25473] <- "Mosquera"
-EM21$MPIO_NAME[EM21$MPIO == 25290] <- "Fusagasuga"
-EM21$MPIO_NAME[EM21$MPIO == 25214] <- "Cota"
-EM21$MPIO_NAME[EM21$MPIO == 25175] <- "Chia"
-EM21$MPIO_NAME[EM21$MPIO == 25758] <- "Sopo"
-EM21$MPIO_NAME[EM21$MPIO == 25785] <- "Tabio"
-EM21$MPIO_NAME[EM21$MPIO == 25898] <- "Zipacon"
-EM21$MPIO_NAME[EM21$MPIO == 25754] <- "Soacha"
-EM21$MPIO_NAME[EM21$MPIO == 25126] <- "Cajica"
-EM21$MPIO_NAME[EM21$MPIO == 25817] <- "Tocancipa"
-EM21$MPIO_NAME[EM21$MPIO == 25430] <- "Madrid"
-EM21$MPIO_NAME[EM21$MPIO == 25286] <- "Funza"
-EM21$MPIO_NAME[EM21$MPIO == 25260] <- "El Rosal"
-EM21$MPIO_NAME[EM21$MPIO == 25099] <- "Bojaca"
-EM21$MPIO_NAME[EM21$MPIO == 25799] <- "Tenjo"
-EM21$MPIO_NAME[EM21$MPIO == 25899] <- "Zipaquira"
-EM21$MPIO_NAME[EM21$MPIO == 25269] <- "Facatativa"
-EM21$MPIO_NAME[EM21$MPIO == 25769] <- "Subachoque"
-EM21$MPIO_NAME[EM21$MPIO == 25377] <- "La Calera"
-EM21$MPIO_NAME[EM21$MPIO == 25295] <- "Gachancipa"
+EM21F$MPIO_NAME <- vector(mode='character',length=dim(EM21)[1])
+EM21F$MPIO_NAME[EM21F$MPIO == 11001] <- "Bogota"
+EM21F$MPIO_NAME[EM21F$MPIO == 25740] <- "Sibate"
+EM21F$MPIO_NAME[EM21F$MPIO == 25473] <- "Mosquera"
+EM21F$MPIO_NAME[EM21F$MPIO == 25290] <- "Fusagasuga"
+EM21F$MPIO_NAME[EM21F$MPIO == 25214] <- "Cota"
+EM21F$MPIO_NAME[EM21F$MPIO == 25175] <- "Chia"
+EM21F$MPIO_NAME[EM21F$MPIO == 25758] <- "Sopo"
+EM21F$MPIO_NAME[EM21F$MPIO == 25785] <- "Tabio"
+EM21F$MPIO_NAME[EM21F$MPIO == 25898] <- "Zipacon"
+EM21F$MPIO_NAME[EM21F$MPIO == 25754] <- "Soacha"
+EM21F$MPIO_NAME[EM21F$MPIO == 25126] <- "Cajica"
+EM21F$MPIO_NAME[EM21F$MPIO == 25817] <- "Tocancipa"
+EM21F$MPIO_NAME[EM21F$MPIO == 25430] <- "Madrid"
+EM21F$MPIO_NAME[EM21F$MPIO == 25286] <- "Funza"
+EM21F$MPIO_NAME[EM21F$MPIO == 25260] <- "El Rosal"
+EM21F$MPIO_NAME[EM21F$MPIO == 25099] <- "Bojaca"
+EM21F$MPIO_NAME[EM21F$MPIO == 25799] <- "Tenjo"
+EM21F$MPIO_NAME[EM21F$MPIO == 25899] <- "Zipaquira"
+EM21F$MPIO_NAME[EM21F$MPIO == 25269] <- "Facatativa"
+EM21F$MPIO_NAME[EM21F$MPIO == 25769] <- "Subachoque"
+EM21F$MPIO_NAME[EM21F$MPIO == 25377] <- "La Calera"
+EM21F$MPIO_NAME[EM21F$MPIO == 25295] <- "Gachancipa"
 
 
 ################################################################################
@@ -307,7 +307,7 @@ sort(unique(EM21[EM21$FL == 1,]$NPCEP4))
 
 # por municipios
 
-list <- split(EM21,EM21$MPIO_NAME)
+list <- split(EM21F,EM21F$MPIO_NAME)
 bog <- as.data.frame(list$Bogota)
 chia <- as.data.frame(list$Chia)
 
