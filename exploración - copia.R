@@ -345,6 +345,7 @@ variable <- sapply(list, function(x) {
 data.frame(t(variable))
 
 
-tabla_a <- as.data.frame(tapply(bog$NVCBP13, bog$NOMBRE_LOCALIDAD, mean))
+tabla_a <- as.data.frame(tapply(bog$NPCKP23, bog$NOMBRE_LOCALIDAD, mean (bog$NPCKP23, ,na.rm = TRUE)))
 
+mean(EM21F$NPCKP23, ,na.rm = TRUE)
 
