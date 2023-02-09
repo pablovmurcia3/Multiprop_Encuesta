@@ -11,6 +11,9 @@ EM21 <- readRDS(encuesta)
 adicionales <- "C:\\Users\\karme\\Desktop\\Prácticas\\Datos\\Encuesta Multiproposito\\20221116_variables_adicionales2021_RDS.rds"
 EM21_plus <- readRDS(adicionales)
 
+base <- "C:\\Users\\karme\\Desktop\\Prácticas\\Datos\\Encuesta Multiproposito\\EM21F.rds"
+EM21F <- readRDS(base)
+
 
 # ViviendA
 length(unique(EM21$DIRECTORIO))
