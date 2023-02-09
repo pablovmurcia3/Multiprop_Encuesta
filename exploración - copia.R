@@ -309,7 +309,10 @@ sort(unique(EM21[EM21$FL == 1,]$NPCEP4))
 
 # por municipios
 
-lista <- as.data.frame(split(EM21,EM21$MPIO_NAME))
+list <- split(EM21,EM21$MPIO_NAME)
+bog <- as.data.frame(list$Bogota)
+chia <- as.data.frame(list$Chia)
+
 variable <- sapply(list, function(x) {
   x <- x[x$CLASE == 1,]
   is.na(x$DES) <- 0
