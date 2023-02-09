@@ -351,3 +351,10 @@ mean(EM21F$NPCKP23,na.rm = TRUE)
 
 tabla1 <- bog %>% group_by(bog$NOMBRE_LOCALIDAD) %>% summarise(Mean = mean(bog$NPCKP23, na.rm = T))
 tabla_a <- EM21F %>% group_by(EM21F$MPIO_NAME) %>% summarise(Mean = mean(NPCKP23, na.rm = T))
+
+
+###############################################################################
+            # Condiciones de Vida
+###############################################################################
+
+
