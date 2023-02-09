@@ -313,6 +313,11 @@ list <- split(EM21,EM21$MPIO_NAME)
 bog <- as.data.frame(list$Bogota)
 chia <- as.data.frame(list$Chia)
 
+# por localidades 
+lista <- split(bog, bog$NOMBRE_LOCALIDAD)
+usaquen <- as.data.frame(lista$Usaquén)
+
+#  
 variable <- sapply(list, function(x) {
   x <- x[x$CLASE == 1,]
   is.na(x$DES) <- 0
@@ -340,5 +345,8 @@ variable <- sapply(list, function(x) {
 
 
 data.frame(t(variable))
+
+
+tabla_a <- as.data.frame(tapply(bog$NVCBP13, bog$NOMBRE_LOCALIDAD, mean))
 
 
