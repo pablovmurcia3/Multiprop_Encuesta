@@ -1,7 +1,5 @@
 memory.limit(size = 10000)
 library(dplyr)
-dplyr
-
 
 ################################################################################
                                       #  Leer datos
@@ -57,53 +55,53 @@ table(EM21$DIV)
 
 
 
-EM21$DIV_n <- vector(mode='character',length=dim(EM21)[1])
+EM21F$DIV_n <- vector(mode='character',length=dim(EM21)[1])
 
-EM21$DIV_n[EM21$DIV == "00"] <- "00"
-EM21$DIV_n[EM21$DIV == "01"] <- "Agricultura, ganadería, caza y actividades de servicios conexas" 
-EM21$DIV_n[EM21$DIV == "02"] <- "Silvicultura y extracción de madera"
-EM21$DIV_n[EM21$DIV == "03"] <- "Pesca y acuicultura"
-EM21$DIV_n[EM21$DIV == "05"] <- "Extracción de carbón de piedra y lignito"
-EM21$DIV_n[EM21$DIV == "06"] <- "Extracción de petróleo crudo y gas natural"
-EM21$DIV_n[EM21$DIV == "07"] <- "Extracción de minerales metalíferos"
-EM21$DIV_n[EM21$DIV == "08"] <- "Extracción de otras minas y canteras"
-EM21$DIV_n[EM21$DIV == "09"] <- "Actividades de servicios de apoyo para la explotación de minas y canteras"
-EM21$DIV_n[EM21$DIV == "10"] <- "Elaboración de productos alimenticios"
-EM21$DIV_n[EM21$DIV == "11"] <- "Elaboración de bebidas" 
-EM21$DIV_n[EM21$DIV == "12"] <- "Elaboración de productos de tabaco"
-EM21$DIV_n[EM21$DIV == "13"] <- "Fabricación de productos textiles"
-EM21$DIV_n[EM21$DIV == "14"] <- "Confección de prendas de vestir"
-EM21$DIV_n[EM21$DIV == "15"] <- "Curtido y recurtido de cueros; fabricación de calzado;fabricación de artículos de viaje, maletas, bolsos de mano y artículos similares, y fabricación de artículos de talabartería y guarnicionería; adobo y teñido de pieles"
-EM21$DIV_n[EM21$DIV == "16"] <- "Transformación de la madera y fabricación de productos de madera y de corcho, excepto muebles; fabricación de artículos de cestería y espartería"
-EM21$DIV_n[EM21$DIV == "17"] <- "Fabricación de papel, cartón y productos de papel y cartón"
-EM21$DIV_n[EM21$DIV == "18"] <- "Actividades de impresión y de producción de copias a partir de grabaciones originales"
-EM21$DIV_n[EM21$DIV == "19"] <- "Coquización, fabricación de productos de la refinación del petróleo y actividad de mezcla de combustibles"
-EM21$DIV_n[EM21$DIV == "20"] <- "Fabricación de sustancias y productos químicos"
-EM21$DIV_n[EM21$DIV == "21"] <- "Fabricación de productos farmacéuticos, sustancias químicas medicinales y productos botánicos de uso farmacéutico" 
-EM21$DIV_n[EM21$DIV == "22"] <- "Fabricación de productos de caucho y de plástico"
-EM21$DIV_n[EM21$DIV == "23"] <- "Fabricación de otros productos minerales no metálicos"
-EM21$DIV_n[EM21$DIV == "24"] <- "Fabricación de productos metalúrgicos básicos"
-EM21$DIV_n[EM21$DIV == "25"] <- "Fabricación de productos elaborados de metal, excepto maquinaria y equipo"
-EM21$DIV_n[EM21$DIV == "26"] <- "Fabricación de productos informáticos, electrónicos y ópticos"
-EM21$DIV_n[EM21$DIV == "27"] <- "Fabricación de aparatos y equipo eléctrico"
-EM21$DIV_n[EM21$DIV == "28"] <- "Fabricación de maquinaria y equipo n.c.p."
-EM21$DIV_n[EM21$DIV == "29"] <- "Fabricación de vehículos automotores, remolques y semirremolques"
-EM21$DIV_n[EM21$DIV == "30"] <- "Fabricación de otros tipos de equipo de transporte"
-EM21$DIV_n[EM21$DIV == "31"] <- "Fabricación de muebles, colchones y somieres" 
-EM21$DIV_n[EM21$DIV == "32"] <- "Otras industrias manufactureras"
-EM21$DIV_n[EM21$DIV == "33"] <- "Instalación, mantenimiento y reparación especializado de maquinaria y equipo"
-EM21$DIV_n[EM21$DIV == "35"] <- "Suministro de electricidad, gas, vapor y aire acondicionado"
-EM21$DIV_n[EM21$DIV == "36"] <- "Captación, tratamiento y distribución de agua"
-EM21$DIV_n[EM21$DIV == "37"] <- "Evacuación y tratamiento de aguas residuales"
-EM21$DIV_n[EM21$DIV == "38"] <- "Recolección, tratamiento y disposición de desechos,recuperación de materiales"
-EM21$DIV_n[EM21$DIV == "39"] <- "Actividades de saneamiento ambiental y otros servicios de gestión de desechos"
-EM21$DIV_n[EM21$DIV == "41"] <- "Construcción de edificios" 
+EM21F$DIV_n[EM21F$DIV == "00"] <- "00"
+EM21F$DIV_n[EM21F$DIV == "01"] <- "Agricultura, ganadería, caza y actividades de servicios conexas" 
+EM21F$DIV_n[EM21F$DIV == "02"] <- "Silvicultura y extracción de madera"
+EM21F$DIV_n[EM21F$DIV == "03"] <- "Pesca y acuicultura"
+EM21F$DIV_n[EM21F$DIV == "05"] <- "Extracción de carbón de piedra y lignito"
+EM21F$DIV_n[EM21F$DIV == "06"] <- "Extracción de petróleo crudo y gas natural"
+EM21F$DIV_n[EM21F$DIV == "07"] <- "Extracción de minerales metalíferos"
+EM21F$DIV_n[EM21F$DIV == "08"] <- "Extracción de otras minas y canteras"
+EM21F$DIV_n[EM21F$DIV == "09"] <- "Actividades de servicios de apoyo para la explotación de minas y canteras"
+EM21F$DIV_n[EM21F$DIV == "10"] <- "Elaboración de productos alimenticios"
+EM21F$DIV_n[EM21F$DIV == "11"] <- "Elaboración de bebidas" 
+EM21F$DIV_n[EM21F$DIV == "12"] <- "Elaboración de productos de tabaco"
+EM21F$DIV_n[EM21F$DIV == "13"] <- "Fabricación de productos textiles"
+EM21F$DIV_n[EM21F$DIV == "14"] <- "Confección de prendas de vestir"
+EM21F$DIV_n[EM21F$DIV == "15"] <- "Curtido y recurtido de cueros; fabricación de calzado;fabricación de artículos de viaje, maletas, bolsos de mano y artículos similares, y fabricación de artículos de talabartería y guarnicionería; adobo y teñido de pieles"
+EM21F$DIV_n[EM21F$DIV == "16"] <- "Transformación de la madera y fabricación de productos de madera y de corcho, excepto muebles; fabricación de artículos de cestería y espartería"
+EM21F$DIV_n[EM21F$DIV == "17"] <- "Fabricación de papel, cartón y productos de papel y cartón"
+EM21F$DIV_n[EM21F$DIV == "18"] <- "Actividades de impresión y de producción de copias a partir de grabaciones originales"
+EM21F$DIV_n[EM21F$DIV == "19"] <- "Coquización, fabricación de productos de la refinación del petróleo y actividad de mezcla de combustibles"
+EM21F$DIV_n[EM21F$DIV == "20"] <- "Fabricación de sustancias y productos químicos"
+EM21F$DIV_n[EM21F$DIV == "21"] <- "Fabricación de productos farmacéuticos, sustancias químicas medicinales y productos botánicos de uso farmacéutico" 
+EM21F$DIV_n[EM21F$DIV == "22"] <- "Fabricación de productos de caucho y de plástico"
+EM21F$DIV_n[EM21F$DIV == "23"] <- "Fabricación de otros productos minerales no metálicos"
+EM21F$DIV_n[EM21F$DIV == "24"] <- "Fabricación de productos metalúrgicos básicos"
+EM21F$DIV_n[EM21F$DIV == "25"] <- "Fabricación de productos elaborados de metal, excepto maquinaria y equipo"
+EM21F$DIV_n[EM21F$DIV == "26"] <- "Fabricación de productos informáticos, electrónicos y ópticos"
+EM21F$DIV_n[EM21F$DIV == "27"] <- "Fabricación de aparatos y equipo eléctrico"
+EM21F$DIV_n[EM21F$DIV == "28"] <- "Fabricación de maquinaria y equipo n.c.p."
+EM21F$DIV_n[EM21F$DIV == "29"] <- "Fabricación de vehículos automotores, remolques y semirremolques"
+EM21F$DIV_n[EM21F$DIV == "30"] <- "Fabricación de otros tipos de equipo de transporte"
+EM21F$DIV_n[EM21F$DIV == "31"] <- "Fabricación de muebles, colchones y somieres" 
+EM21F$DIV_n[EM21F$DIV == "32"] <- "Otras industrias manufactureras"
+EM21F$DIV_n[EM21F$DIV == "33"] <- "Instalación, mantenimiento y reparación especializado de maquinaria y equipo"
+EM21F$DIV_n[EM21F$DIV == "35"] <- "Suministro de electricidad, gas, vapor y aire acondicionado"
+EM21F$DIV_n[EM21F$DIV == "36"] <- "Captación, tratamiento y distribución de agua"
+EM21F$DIV_n[EM21F$DIV == "37"] <- "Evacuación y tratamiento de aguas residuales"
+EM21F$DIV_n[EM21F$DIV == "38"] <- "Recolección, tratamiento y disposición de desechos,recuperación de materiales"
+EM21F$DIV_n[EM21F$DIV == "39"] <- "Actividades de saneamiento ambiental y otros servicios de gestión de desechos"
+EM21F$DIV_n[EM21F$DIV == "41"] <- "Construcción de edificios" 
 EM21F$DIV_n[EM21F$DIV == "42"] <- "Obras de ingeniería civil"
 EM21F$DIV_n[EM21F$DIV == "43"] <- "Actividades especializadas para la construcción de edificios y obras de ingeniería civil"
 EM21F$DIV_n[EM21F$DIV == "44"] <- "44"
-EM21$DIV_n[EM21$DIV == "45"] <- "Comercio, mantenimiento y reparación de vehículos automotores y motocicletas, sus partes, piezas y accesorios"
-EM21$DIV_n[EM21$DIV == "46"] <- "Comercio al por mayor y en comisión o por contrata, excepto el comercio de vehículos automotores y motocicletas"
-EM21$DIV_n[EM21$DIV == "47"] <- "Comercio al por menor (incluso el comercio al por menor de combustibles), excepto el de vehículos automotores y motocicletas"
+EM21F$DIV_n[EM21F$DIV == "45"] <- "Comercio, mantenimiento y reparación de vehículos automotores y motocicletas, sus partes, piezas y accesorios"
+EM21F$DIV_n[EM21F$DIV == "46"] <- "Comercio al por mayor y en comisión o por contrata, excepto el comercio de vehículos automotores y motocicletas"
+EM21F$DIV_n[EM21F$DIV == "47"] <- "Comercio al por menor (incluso el comercio al por menor de combustibles), excepto el de vehículos automotores y motocicletas"
 EM21F$DIV_n[EM21F$DIV == "49"] <- "Transporte terrestre; transporte por tuberías"
 EM21F$DIV_n[EM21F$DIV == "50"] <- "Transporte acuático"
 EM21F$DIV_n[EM21F$DIV == "51"] <- "Transporte aéreo" 
@@ -272,29 +270,29 @@ Desagregadas por clase
 ################################################################################
 
 
-EM21$MPIO_NAME <- vector(mode='character',length=dim(EM21)[1])
-EM21$MPIO_NAME[EM21$MPIO == 11001] <- "Bogota"
-EM21$MPIO_NAME[EM21$MPIO == 25740] <- "Sibate"
-EM21$MPIO_NAME[EM21$MPIO == 25473] <- "Mosquera"
-EM21$MPIO_NAME[EM21$MPIO == 25290] <- "Fusagasuga"
-EM21$MPIO_NAME[EM21$MPIO == 25214] <- "Cota"
-EM21$MPIO_NAME[EM21$MPIO == 25175] <- "Chia"
-EM21$MPIO_NAME[EM21$MPIO == 25758] <- "Sopo"
-EM21$MPIO_NAME[EM21$MPIO == 25785] <- "Tabio"
-EM21$MPIO_NAME[EM21$MPIO == 25898] <- "Zipacon"
-EM21$MPIO_NAME[EM21$MPIO == 25754] <- "Soacha"
-EM21$MPIO_NAME[EM21$MPIO == 25126] <- "Cajica"
-EM21$MPIO_NAME[EM21$MPIO == 25817] <- "Tocancipa"
-EM21$MPIO_NAME[EM21$MPIO == 25430] <- "Madrid"
-EM21$MPIO_NAME[EM21$MPIO == 25286] <- "Funza"
-EM21$MPIO_NAME[EM21$MPIO == 25260] <- "El Rosal"
-EM21$MPIO_NAME[EM21$MPIO == 25099] <- "Bojaca"
-EM21$MPIO_NAME[EM21$MPIO == 25799] <- "Tenjo"
-EM21$MPIO_NAME[EM21$MPIO == 25899] <- "Zipaquira"
-EM21$MPIO_NAME[EM21$MPIO == 25269] <- "Facatativa"
-EM21$MPIO_NAME[EM21$MPIO == 25769] <- "Subachoque"
-EM21$MPIO_NAME[EM21$MPIO == 25377] <- "La Calera"
-EM21$MPIO_NAME[EM21$MPIO == 25295] <- "Gachancipa"
+EM21F$MPIO_NAME <- vector(mode='character',length=dim(EM21)[1])
+EM21F$MPIO_NAME[EM21F$MPIO == 11001] <- "Bogota"
+EM21F$MPIO_NAME[EM21F$MPIO == 25740] <- "Sibate"
+EM21F$MPIO_NAME[EM21F$MPIO == 25473] <- "Mosquera"
+EM21F$MPIO_NAME[EM21F$MPIO == 25290] <- "Fusagasuga"
+EM21F$MPIO_NAME[EM21F$MPIO == 25214] <- "Cota"
+EM21F$MPIO_NAME[EM21F$MPIO == 25175] <- "Chia"
+EM21F$MPIO_NAME[EM21F$MPIO == 25758] <- "Sopo"
+EM21F$MPIO_NAME[EM21F$MPIO == 25785] <- "Tabio"
+EM21F$MPIO_NAME[EM21F$MPIO == 25898] <- "Zipacon"
+EM21F$MPIO_NAME[EM21F$MPIO == 25754] <- "Soacha"
+EM21F$MPIO_NAME[EM21F$MPIO == 25126] <- "Cajica"
+EM21F$MPIO_NAME[EM21F$MPIO == 25817] <- "Tocancipa"
+EM21F$MPIO_NAME[EM21F$MPIO == 25430] <- "Madrid"
+EM21F$MPIO_NAME[EM21F$MPIO == 25286] <- "Funza"
+EM21F$MPIO_NAME[EM21F$MPIO == 25260] <- "El Rosal"
+EM21F$MPIO_NAME[EM21F$MPIO == 25099] <- "Bojaca"
+EM21F$MPIO_NAME[EM21F$MPIO == 25799] <- "Tenjo"
+EM21F$MPIO_NAME[EM21F$MPIO == 25899] <- "Zipaquira"
+EM21F$MPIO_NAME[EM21F$MPIO == 25269] <- "Facatativa"
+EM21F$MPIO_NAME[EM21F$MPIO == 25769] <- "Subachoque"
+EM21F$MPIO_NAME[EM21F$MPIO == 25377] <- "La Calera"
+EM21F$MPIO_NAME[EM21F$MPIO == 25295] <- "Gachancipa"
 
 
 ################################################################################
@@ -309,10 +307,15 @@ sort(unique(EM21[EM21$FL == 1,]$NPCEP4))
 
 # por municipios
 
-list <- split(EM21,EM21$MPIO_NAME)
+list <- split(EM21F,EM21F$MPIO_NAME)
 bog <- as.data.frame(list$Bogota)
 chia <- as.data.frame(list$Chia)
 
+# por localidades 
+lista <- split(bog, bog$NOMBRE_LOCALIDAD)
+usaquen <- as.data.frame(lista$Usaquén)
+
+#  
 variable <- sapply(list, function(x) {
   x <- x[x$CLASE == 1,]
   is.na(x$DES) <- 0
@@ -342,3 +345,9 @@ variable <- sapply(list, function(x) {
 data.frame(t(variable))
 
 
+tabla_a <- as.data.frame(tapply(bog$NPCKP23, bog$NOMBRE_LOCALIDAD, mean (bog$NPCKP23,na.rm = TRUE)))
+
+mean(EM21F$NPCKP23,na.rm = TRUE)
+
+tabla1 <- bog %>% group_by(bog$NOMBRE_LOCALIDAD) %>% summarise(Mean = mean(bog$NPCKP23, na.rm = T))
+tabla_a <- EM21F %>% group_by(EM21F$MPIO_NAME) %>% summarise(Mean = mean(NPCKP23, na.rm = T))
