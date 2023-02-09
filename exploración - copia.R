@@ -43,22 +43,22 @@ EM21F <- merge(EM21, EM21_plus,
 #sectores 
 
 
-EM21$NPCKP16_COD4_c <- sprintf("%04d", as.numeric(EM21$NPCKP16_COD4))
+EM21F$NPCKP16_COD4_c <- sprintf("%04d", as.numeric(EM21F$NPCKP16_COD4))
 
-EM21$DIV <- substr(EM21$NPCKP16_COD4_c,1,2)
+EM21F$DIV <- substr(EM21F$NPCKP16_COD4_c,1,2)
 
-sort(unique(EM21$NPCKP16_COD4))
-
-
-
-sort(unique(EM21$DIV))
-
-table(EM21$NPCKP16_COD4)
-table(EM21$DIV)
+sort(unique(EM21F$NPCKP16_COD4))
 
 
 
-EM21F$DIV_n <- vector(mode='character',length=dim(EM21)[1])
+sort(unique(EM21F$DIV))
+
+table(EM21F$NPCKP16_COD4)
+table(EM21F$DIV)
+
+
+
+EM21F$DIV_n <- vector(mode='character',length=dim(EM21F)[1])
 
 EM21F$DIV_n[EM21F$DIV == "00"] <- "00"
 EM21F$DIV_n[EM21F$DIV == "01"] <- "Agricultura, ganadería, caza y actividades de servicios conexas" 
@@ -360,7 +360,10 @@ tabla_a <- EM21F %>% group_by(EM21F$MPIO_NAME) %>% summarise(Mean = mean(NPCKP23
             # Condiciones de Vida
 ###############################################################################
 
+# Número de personas por hogar
 library(openxlsx)
 tabla1 <- EM21F %>% group_by(EM21F$MPIO_NAME, EM21F$NVCBP11AA)  %>% summarise(Promedio = mean(NHCCPCTRL2, na.rm = T))
 write.xlsx(tabla1, 'C:\\Users\\karme\\Desktop\\Prácticas\\Datos\\Encuesta Multiproposito', colNames= TRUE, overwrite = TRUE)
 
+tabla2 <- bog %>% group_by(bog$NOMBRE_LOCALIDAD, bog$NVCBP11AA)  %>% summarise(Promedio = mean(NHCCPCTRL2, na.rm = T))
+write.xlsx(tabla1, 'C:\\Users\\karme\\Desktop\\Prácticas\\Datos\\Encuesta Multiproposito', colNames= TRUE, overwrite = TRUE)
