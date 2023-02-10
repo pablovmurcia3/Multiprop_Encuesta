@@ -210,7 +210,9 @@ sort(table(EM21F$SEC))
 
 
 
-######
+###############################################################################
+                  #Juventud
+###############################################################################
 
 EM_JOV <- EM21[EM21$NPCEP4 >= 14 & EM21$NPCEP4 <= 28 ,]
 
@@ -246,30 +248,6 @@ tablita_CLASE <- EM_JOV %>% group_by(NPCKP16_COD4)%>% summarise(no = length(DIV_
 tablita_CLASE <- EM_JOV %>% filter() %>% group_by(NPCKP16_COD4)%>% summarise(no = length(DIV_n))  %>% arrange(no)
 
 
-###############################################################################
-
-Comercio al por menor (incluso el comercio al por menor de combustibles), excepto el de vehículos automotores y motocicletas
-Actividades de servicios de comidas y bebidas
-Actividades administrativas y de apoyo de oficina y otras actividades de apoyo a las empresas
-Actividades de atención de la salud humana
-
-
-
-
-Desagregadas por clase
-
-
-
-
-
-###############################################################################
-
-
-
-
-
-
-
 ################################################################################
                                 #  diccionarios
 ################################################################################
@@ -301,14 +279,8 @@ EM21F$MPIO_NAME[EM21F$MPIO == 25295] <- "Gachancipa"
 
 
 ################################################################################
-                              #  Mercado laboral
+                              #  Separación de la data
 ################################################################################
-sum(EM21$, na.rm = TRUE)
-EM21$FL
-class(EM21$NPCEP4)
-
-
-sort(unique(EM21[EM21$FL == 1,]$NPCEP4))
 
 # por municipios
 
