@@ -1,15 +1,18 @@
+memory.limit(size = 10000)
 library(dplyr)
 
 ################################################################################
                                       #  Leer datos
 ################################################################################
-file.choose()
 
-filename <- "C:\\Users\\pablo\\OneDrive\\Escritorio\\R proyects\\Multiprop_Encuesta\\Data\\EM2021\\EM2021.rds"
-EM21 <- readRDS(filename)
+encuesta<- "C:\\Users\\karme\\Desktop\\Prácticas\\Datos\\Encuesta Multiproposito\\20221109EM2021_publica.rds"
+EM21 <- readRDS(encuesta)
 
-filename <- "C:\\Users\\pablo\\OneDrive\\Escritorio\\R proyects\\Multiprop_Encuesta\\Data\\EM2021\\EM2021_PLUS.rds"
-EM21_plus <- readRDS(filename)
+adicionales <- "C:\\Users\\karme\\Desktop\\Prácticas\\Datos\\Encuesta Multiproposito\\20221116_variables_adicionales2021_RDS.rds"
+EM21_plus <- readRDS(adicionales)
+
+base <- "C:\\Users\\karme\\Desktop\\Prácticas\\Datos\\Encuesta Multiproposito\\EM21F.rds"
+EM21F <- readRDS(base)
 
 
 # ViviendA
@@ -43,6 +46,17 @@ EM21F <- merge(EM21, EM21_plus,
 EM21F$NPCKP16_COD4_c <- sprintf("%04d", as.numeric(EM21F$NPCKP16_COD4))
 
 EM21F$DIV <- substr(EM21F$NPCKP16_COD4_c,1,2)
+
+sort(unique(EM21F$NPCKP16_COD4))
+
+
+
+sort(unique(EM21F$DIV))
+
+table(EM21F$NPCKP16_COD4)
+table(EM21F$DIV)
+
+
 
 EM21F$DIV_n <- vector(mode='character',length=dim(EM21F)[1])
 
@@ -189,83 +203,173 @@ EM21F$SEC[EM21F$DIV == "97"| EM21F$DIV == "98"] <- "Actividades de los hogares e
 
 EM21F$SEC[EM21F$DIV == "99"] <- "Actividades de organizaciones y entidades extraterritoriales"
 
+
+sort(table(EM21F$SEC))
+
+
+
 ######
-# Municipios
+
+EM_JOV <- EM21[EM21$NPCEP4 >= 14 & EM21$NPCEP4 <= 28 ,]
+
+
+sort(table(EM_JOV$SEC))
+
+library(dplyr)
+
+tablita_sec <- EM_JOV %>% group_by(SEC) %>% summarise(no = length(SEC))  %>% arrange(no)
+
+
+tablita_div <- EM_JOV %>% group_by(DIV_n) %>% summarise(no = length(DIV_n))  %>% arrange(no)
+
+
+tablita_div_c <- EM_JOV %>% filter(DIV_n == "Comercio al por menor (incluso el comercio al por menor de combustibles), excepto el de vehículos automotores y motocicletas") %>%
+  group_by(NPCKP16_COD4)%>% summarise(no = length(DIV_n))  %>% arrange(no)
+
+
+tablita_div_a <- EM_JOV %>% filter(DIV_n ==  "Actividades de servicios de comidas y bebidas") %>%
+  group_by(NPCKP16_COD4)%>% summarise(no = length(DIV_n))  %>% arrange(no)
+
+
+tablita_div_OFI <- EM_JOV %>% filter(DIV_n ==  "Actividades administrativas y de apoyo de oficina y otras actividades de apoyo a las empresas") %>%
+  group_by(NPCKP16_COD4)%>% summarise(no = length(DIV_n))  %>% arrange(no)
+  
+
+sum(tablita_div_a$no)
+
+
+tablita_CLASE <- EM_JOV %>% group_by(NPCKP16_COD4)%>% summarise(no = length(DIV_n))  %>% arrange(no)
+
+
+tablita_CLASE <- EM_JOV %>% filter() %>% group_by(NPCKP16_COD4)%>% summarise(no = length(DIV_n))  %>% arrange(no)
+
+
+###############################################################################
+
+Comercio al por menor (incluso el comercio al por menor de combustibles), excepto el de vehículos automotores y motocicletas
+Actividades de servicios de comidas y bebidas
+Actividades administrativas y de apoyo de oficina y otras actividades de apoyo a las empresas
+Actividades de atención de la salud humana
+
+
+
+
+Desagregadas por clase
+
+
+
+
+
+###############################################################################
+
+
+
+
+
+
+
+################################################################################
+                                #  diccionarios
+################################################################################
+
 
 EM21F$MPIO_NAME <- vector(mode='character',length=dim(EM21)[1])
-EM21F$MPIO_NAME[EM21F$MPIO == 11001] <- "Bogotá"
-EM21F$MPIO_NAME[EM21F$MPIO == 25740] <- "Sibaté"
+EM21F$MPIO_NAME[EM21F$MPIO == 11001] <- "Bogota"
+EM21F$MPIO_NAME[EM21F$MPIO == 25740] <- "Sibate"
 EM21F$MPIO_NAME[EM21F$MPIO == 25473] <- "Mosquera"
-EM21F$MPIO_NAME[EM21F$MPIO == 25290] <- "Fusagasugá"
+EM21F$MPIO_NAME[EM21F$MPIO == 25290] <- "Fusagasuga"
 EM21F$MPIO_NAME[EM21F$MPIO == 25214] <- "Cota"
-EM21F$MPIO_NAME[EM21F$MPIO == 25175] <- "Chía"
-EM21F$MPIO_NAME[EM21F$MPIO == 25758] <- "Sopó"
+EM21F$MPIO_NAME[EM21F$MPIO == 25175] <- "Chia"
+EM21F$MPIO_NAME[EM21F$MPIO == 25758] <- "Sopo"
 EM21F$MPIO_NAME[EM21F$MPIO == 25785] <- "Tabio"
-EM21F$MPIO_NAME[EM21F$MPIO == 25898] <- "Zipacón"
+EM21F$MPIO_NAME[EM21F$MPIO == 25898] <- "Zipacon"
 EM21F$MPIO_NAME[EM21F$MPIO == 25754] <- "Soacha"
-EM21F$MPIO_NAME[EM21F$MPIO == 25126] <- "Cajicá"
-EM21F$MPIO_NAME[EM21F$MPIO == 25817] <- "Tocancipá"
+EM21F$MPIO_NAME[EM21F$MPIO == 25126] <- "Cajica"
+EM21F$MPIO_NAME[EM21F$MPIO == 25817] <- "Tocancipa"
 EM21F$MPIO_NAME[EM21F$MPIO == 25430] <- "Madrid"
 EM21F$MPIO_NAME[EM21F$MPIO == 25286] <- "Funza"
 EM21F$MPIO_NAME[EM21F$MPIO == 25260] <- "El Rosal"
-EM21F$MPIO_NAME[EM21F$MPIO == 25099] <- "Bojacá"
+EM21F$MPIO_NAME[EM21F$MPIO == 25099] <- "Bojaca"
 EM21F$MPIO_NAME[EM21F$MPIO == 25799] <- "Tenjo"
 EM21F$MPIO_NAME[EM21F$MPIO == 25899] <- "Zipaquira"
 EM21F$MPIO_NAME[EM21F$MPIO == 25269] <- "Facatativa"
 EM21F$MPIO_NAME[EM21F$MPIO == 25769] <- "Subachoque"
 EM21F$MPIO_NAME[EM21F$MPIO == 25377] <- "La Calera"
-EM21F$MPIO_NAME[EM21F$MPIO == 25295] <- "Gachancipá"
+EM21F$MPIO_NAME[EM21F$MPIO == 25295] <- "Gachancipa"
 
 
+################################################################################
+                              #  Mercado laboral
+################################################################################
+sum(EM21$, na.rm = TRUE)
+EM21$FL
+class(EM21$NPCEP4)
+
+
+sort(unique(EM21[EM21$FL == 1,]$NPCEP4))
+
+# por municipios
 
 list <- split(EM21F,EM21F$MPIO_NAME)
+bog <- as.data.frame(list$Bogota)
+chia <- as.data.frame(list$Chia)
 
-EM_MAD <- as.data.frame(list$Madrid)
-EM_FUN <- as.data.frame(list$Funza)
-EM_MOS <- as.data.frame(list$Mosquera)
-EM_ROS <- as.data.frame(list$"El Rosal")
-EM_FAC <- as.data.frame(list$Facatativa)
+# por localidades 
+lista <- split(bog, bog$NOMBRE_LOCALIDAD)
+usaquen <- as.data.frame(lista$Usaquén)
 
-library(dplyr)
-
-tablita_MAD <- EM_MAD %>% filter(NPCKPA46 == 1) %>% group_by(DIV_n) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
-
-tablita_FUN <- EM_FUN %>% filter(NPCKPA46 == 1) %>% group_by(DIV_n) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
-
-tablita_MOS <- EM_MOS %>% filter(NPCKPA46 == 1) %>% group_by(DIV_n) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
-
-tablita_ROS <- EM_ROS %>% filter(NPCKPA46 == 1) %>% group_by(DIV_n) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
-
-tablita_FAC <- EM_FAC %>% filter(NPCKPA46 == 1) %>% group_by(DIV_n) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
-
-
-library(writexl)
-
-write_xlsx(tablita_MAD,paste0("Madrid.xlsx"))
-write_xlsx(tablita_FUN,paste0("Funza.xlsx"))
-write_xlsx(tablita_MOS,paste0("Mosquera.xlsx"))
-write_xlsx(tablita_ROS,paste0("Rosales.xlsx"))
-write_xlsx(tablita_FAC,paste0("Facatativa.xlsx"))
-
-
-tablita_MAD <- EM_MAD %>% filter(NPCKPA46 == 1) %>% group_by(NPCKP16_COD4) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
-
-tablita_FUN <- EM_FUN %>% filter(NPCKPA46 == 1) %>% group_by(NPCKP16_COD4) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
-
-tablita_MOS <- EM_MOS %>% filter(NPCKPA46 == 1) %>% group_by(NPCKP16_COD4) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
-
-tablita_ROS <- EM_ROS %>% filter(NPCKPA46 == 1) %>% group_by(NPCKP16_COD4) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
-
-tablita_FAC <- EM_FAC %>% filter(NPCKPA46 == 1) %>% group_by(NPCKP16_COD4) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
-
-
-write_xlsx(tablita_MAD,paste0("Madrid.xlsx"))
-write_xlsx(tablita_FUN,paste0("Funza.xlsx"))
-write_xlsx(tablita_MOS,paste0("Mosquera.xlsx"))
-write_xlsx(tablita_ROS,paste0("Rosales.xlsx"))
-write_xlsx(tablita_FAC,paste0("Facatativa.xlsx"))
+#  
+variable <- sapply(list, function(x) {
+  x <- x[x$CLASE == 1,]
+  is.na(x$DES) <- 0
+  is.na(x$FL) <- 0
+  ft <- sum(x[x$FL == 1,]$FEX_C, na.rm = TRUE)
+  d <- sum(x[x$DES == 1,]$FEX_C, na.rm = TRUE)
+  td_g <- d/ft*100
+  
+  ft_h <- sum(x[x$FL == 1 & x$NPCEP5 == 1 ,]$FEX_C, na.rm = TRUE)
+  d_h <- sum(x[x$DES == 1 & x$NPCEP5 == 1 ,]$FEX_C, na.rm = TRUE)
+  td_h <- d_h/ft_h*100
+  
+  ft_m <- sum(x[x$FL == 1 & x$NPCEP5 == 2,]$FEX_C, na.rm = TRUE)
+  d_m <- sum(x[x$DES == 1 & x$NPCEP5 == 2,]$FEX_C, na.rm = TRUE)
+  td_m <- d_m/ft_m*100
+  
+  ft_j <- sum(x[x$FL == 1 & x$NPCEP4 <=28,]$FEX_C, na.rm = TRUE)
+  d_j <- sum(x[x$DES == 1 & x$NPCEP4 <=28,]$FEX_C, na.rm = TRUE)
+  td_j <- d_j/ft_j*100
+  
+  
+  t <- c(td_g, td_h, td_m, td_j)
+}) 
 
 
 
-######
+data.frame(t(variable))
+
+
+tabla_a <- as.data.frame(tapply(bog$NPCKP23, bog$NOMBRE_LOCALIDAD, mean (bog$NPCKP23,na.rm = TRUE)))
+
+mean(EM21F$NPCKP23,na.rm = TRUE)
+
+tabla1 <- bog %>% group_by(bog$NOMBRE_LOCALIDAD) %>% summarise(Mean = mean(bog$NPCKP23, na.rm = T))
+tabla_a <- EM21F %>% group_by(EM21F$MPIO_NAME) %>% summarise(Mean = mean(NPCKP23, na.rm = T))
+
+
+###############################################################################
+            # Condiciones de Vida
+###############################################################################
+
+# Número de personas por hogar
+library(openxlsx)
+tabla1 <- EM21F %>% group_by(EM21F$MPIO_NAME, EM21F$NVCBP11AA)  %>% summarise(Promedio = mean(NHCCPCTRL2, na.rm = T))
+write.xlsx(tabla1, 'C:\\Users\\karme\\Desktop\\Prácticas\\Datos\\Encuesta Multiproposito', colNames= TRUE, overwrite = TRUE)
+
+tabla2 <- bog %>% group_by(bog$NOMBRE_LOCALIDAD, bog$NVCBP11AA)  %>% summarise(Promedio = mean(NHCCPCTRL2, na.rm = T))
+write.xlsx(tabla1, 'C:\\Users\\karme\\Desktop\\Prácticas\\Datos\\Encuesta Multiproposito', colNames= TRUE, overwrite = TRUE)
+
+EM21F$CLASE <- vector(mode='character',length=dim(EM21F)[1])
+EM21F$CLASE[EM21F$NPCKP23>0] <- "Clase alta"
+
+tabla2 <- bog %>% group_by(bog$NOMBRE_LOCALIDAD, bog$NVCBP16) %>% summarise(Promedio = sum(NHCCPCTRL2, na.rm = T))
 
