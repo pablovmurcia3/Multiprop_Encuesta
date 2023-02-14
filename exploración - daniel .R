@@ -253,7 +253,7 @@ tablita_CLASE <- EM_JOV %>% filter() %>% group_by(NPCKP16_COD4)%>% summarise(no 
 ################################################################################
 
 
-EM21F$MPIO_NAME <- vector(mode='character',length=dim(EM21)[1])
+EM21F$MPIO_NAME <- vector(mode='character',length=dim(EM21F)[1])
 EM21F$MPIO_NAME[EM21F$MPIO == 11001] <- "Bogota"
 EM21F$MPIO_NAME[EM21F$MPIO == 25740] <- "Sibate"
 EM21F$MPIO_NAME[EM21F$MPIO == 25473] <- "Mosquera"
@@ -345,4 +345,7 @@ EM21F$CLASE <- vector(mode='character',length=dim(EM21F)[1])
 EM21F$CLASE[EM21F$NPCKP23>0] <- "Clase alta"
 
 tabla2 <- bog %>% group_by(bog$NOMBRE_LOCALIDAD, bog$NVCBP16) %>% summarise(Promedio = sum(NHCCPCTRL2, na.rm = T))
+
+municipios <- c(table(EM21F$MPIO_NAME))
+
 

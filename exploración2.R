@@ -220,6 +220,7 @@ EM21F$MPIO_NAME[EM21F$MPIO == 25295] <- "Gachancipá"
 
 list <- split(EM21F,EM21F$MPIO_NAME)
 
+EM_BOG <- as.data.frame(list$Bogotá)
 EM_CAJ <- as.data.frame(list$Cajicá)
 EM_CHI <- as.data.frame(list$Chía)
 EM_ROS <- as.data.frame(list$"El Rosal")
@@ -237,16 +238,36 @@ EM_ZIP <- as.data.frame(list$Zipaquira)
 
 
 library(dplyr)
+tablita_BOG <- EM_BOG %>% filter(NPCKPA46 == 1) %>% group_by(DIV_n) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
 
-tablita_MAD <- EM_MAD %>% filter(NPCKPA46 == 1) %>% group_by(DIV_n) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
+tablita_CAJ <- EM_CAJ %>% filter(NPCKPA46 == 1) %>% group_by(DIV_n) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
 
-tablita_FUN <- EM_FUN %>% filter(NPCKPA46 == 1) %>% group_by(DIV_n) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
-
-tablita_MOS <- EM_MOS %>% filter(NPCKPA46 == 1) %>% group_by(DIV_n) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
+tablita_CHI <- EM_CHI %>% filter(NPCKPA46 == 1) %>% group_by(DIV_n) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
 
 tablita_ROS <- EM_ROS %>% filter(NPCKPA46 == 1) %>% group_by(DIV_n) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
 
 tablita_FAC <- EM_FAC %>% filter(NPCKPA46 == 1) %>% group_by(DIV_n) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
+
+tablita_FUN <- EM_FUN %>% filter(NPCKPA46 == 1) %>% group_by(DIV_n) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
+
+tablita_GAC <- EM_GAC %>% filter(NPCKPA46 == 1) %>% group_by(DIV_n) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
+
+tablita_CAL <- EM_CAL %>% filter(NPCKPA46 == 1) %>% group_by(DIV_n) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
+
+tablita_MAD <- EM_MAD %>% filter(NPCKPA46 == 1) %>% group_by(DIV_n) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
+
+tablita_MOS <- EM_MOS %>% filter(NPCKPA46 == 1) %>% group_by(DIV_n) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
+
+tablita_SIB <- EM_SIB %>% filter(NPCKPA46 == 1) %>% group_by(DIV_n) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
+
+tablita_SOA <- EM_SOA %>% filter(NPCKPA46 == 1) %>% group_by(DIV_n) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
+
+tablita_SOP <- EM_SOP %>% filter(NPCKPA46 == 1) %>% group_by(DIV_n) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
+
+tablita_TOC <- EM_TOC %>% filter(NPCKPA46 == 1) %>% group_by(DIV_n) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
+
+tablita_XIP <- EM_ZIP %>% filter(NPCKPA46 == 1) %>% group_by(DIV_n) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
+
 
 
 library(writexl)
