@@ -220,11 +220,21 @@ EM21F$MPIO_NAME[EM21F$MPIO == 25295] <- "Gachancipá"
 
 list <- split(EM21F,EM21F$MPIO_NAME)
 
-EM_MAD <- as.data.frame(list$Madrid)
-EM_FUN <- as.data.frame(list$Funza)
-EM_MOS <- as.data.frame(list$Mosquera)
+EM_CAJ <- as.data.frame(list$Cajicá)
+EM_CHI <- as.data.frame(list$Chía)
 EM_ROS <- as.data.frame(list$"El Rosal")
 EM_FAC <- as.data.frame(list$Facatativa)
+EM_FUN <- as.data.frame(list$Funza)
+EM_GAC <- as.data.frame(list$Gachancipá)
+EM_CAL <- as.data.frame(list$"La Calera")
+EM_MAD <- as.data.frame(list$Madrid)
+EM_MOS <- as.data.frame(list$Mosquera)
+EM_SIB <- as.data.frame(list$Sibaté)
+EM_SOA <- as.data.frame(list$Soacha)
+EM_SOP <- as.data.frame(list$Sopó)
+EM_TOC <- as.data.frame(list$Tocancipá)
+EM_ZIP <- as.data.frame(list$Zipaquira)
+
 
 library(dplyr)
 
