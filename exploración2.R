@@ -273,30 +273,59 @@ tablita_ZIP <- EM_ZIP %>% filter(NPCKPA46 == 1) %>% group_by(DIV_n) %>% summaris
 
 library(writexl)
 
+write_xlsx(tablita_BOG,paste0("Bogota.xlsx"))
+write_xlsx(tablita_CAJ,paste0("Cajica.xlsx"))
+write_xlsx(tablita_CHI,paste0("Chia.xlsx"))
+write_xlsx(tablita_CAL,paste0("Calera.xlsx"))
 write_xlsx(tablita_ROS,paste0("Rosales.xlsx"))
 write_xlsx(tablita_FAC,paste0("Facatativa.xlsx"))
 write_xlsx(tablita_FUN,paste0("Funza.xlsx"))
+write_xlsx(tablita_GAC,paste0("Gachancipa.xlsx"))
 write_xlsx(tablita_MAD,paste0("Madrid.xlsx"))
 write_xlsx(tablita_MOS,paste0("Mosquera.xlsx"))
+write_xlsx(tablita_SIB,paste0("Sibate.xlsx"))
+write_xlsx(tablita_SOA,paste0("Soacha.xlsx"))
+write_xlsx(tablita_SOP,paste0("Sopo.xlsx"))
+write_xlsx(tablita_TOC,paste0("Tocancipa.xlsx"))
+write_xlsx(tablita_ZIP,paste0("Zipaquira.xlsx"))
 
 
+tablita_BOG <- EM_BOG %>% filter(NPCKPA46 == 1) %>% group_by(NPCKP16_COD4) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
 
-tablita_MAD <- EM_MAD %>% filter(NPCKPA46 == 1) %>% group_by(NPCKP16_COD4) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
+tablita_CAJ <- EM_CAJ %>% filter(NPCKPA46 == 1) %>% group_by(NPCKP16_COD4) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
 
-tablita_FUN <- EM_FUN %>% filter(NPCKPA46 == 1) %>% group_by(NPCKP16_COD4) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
-
-tablita_MOS <- EM_MOS %>% filter(NPCKPA46 == 1) %>% group_by(NPCKP16_COD4) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
+tablita_CHI <- EM_CHI %>% filter(NPCKPA46 == 1) %>% group_by(NPCKP16_COD4) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
 
 tablita_ROS <- EM_ROS %>% filter(NPCKPA46 == 1) %>% group_by(NPCKP16_COD4) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
 
 tablita_FAC <- EM_FAC %>% filter(NPCKPA46 == 1) %>% group_by(NPCKP16_COD4) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
 
+tablita_FUN <- EM_FUN %>% filter(NPCKPA46 == 1) %>% group_by(NPCKP16_COD4) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
+
+tablita_GAC <- EM_GAC %>% filter(NPCKPA46 == 1) %>% group_by(NPCKP16_COD4) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
+
+tablita_CAL <- EM_CAL %>% filter(NPCKPA46 == 1) %>% group_by(NPCKP16_COD4) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
+
+tablita_MAD <- EM_MAD %>% filter(NPCKPA46 == 1) %>% group_by(NPCKP16_COD4) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
+
+tablita_MOS <- EM_MOS %>% filter(NPCKPA46 == 1) %>% group_by(NPCKP16_COD4) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
+
+tablita_SIB <- EM_SIB %>% filter(NPCKPA46 == 1) %>% group_by(NPCKP16_COD4) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
+
+tablita_SOA <- EM_SOA %>% filter(NPCKPA46 == 1) %>% group_by(NPCKP16_COD4) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
+
+tablita_SOP <- EM_SOP %>% filter(NPCKPA46 == 1) %>% group_by(NPCKP16_COD4) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
+
+tablita_TOC <- EM_TOC %>% filter(NPCKPA46 == 1) %>% group_by(NPCKP16_COD4) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
+
+tablita_ZIP <- EM_ZIP %>% filter(NPCKPA46 == 1) %>% group_by(NPCKP16_COD4) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
+
 
 write_xlsx(tablita_MAD,paste0("Madrid.xlsx"))
 write_xlsx(tablita_FUN,paste0("Funza.xlsx"))
 write_xlsx(tablita_MOS,paste0("Mosquera.xlsx"))
 write_xlsx(tablita_ROS,paste0("Rosales.xlsx"))
-write_xlsx(tablita_FAC,paste0("Facatativa.xlsx"))
+write_xlsx(tablita_FAC,paste0("Facatativa.xlsx"),sheetName="newsheet",append=TRUE)
 
 
 
