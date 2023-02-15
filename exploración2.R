@@ -321,13 +321,21 @@ tablita_TOC <- EM_TOC %>% filter(NPCKPA46 == 1) %>% group_by(NPCKP16_COD4) %>% s
 tablita_ZIP <- EM_ZIP %>% filter(NPCKPA46 == 1) %>% group_by(NPCKP16_COD4) %>% summarise(no = sum(FEX_C))  %>% arrange(desc(no)) %>% mutate(Percentage=no/sum(no)*100) %>% slice_head(n=6)
 
 
-write_xlsx(tablita_MAD,paste0("Madrid.xlsx"))
-write_xlsx(tablita_FUN,paste0("Funza.xlsx"))
-write_xlsx(tablita_MOS,paste0("Mosquera.xlsx"))
-write_xlsx(tablita_ROS,paste0("Rosales.xlsx"))
-write_xlsx(tablita_FAC,paste0("Facatativa.xlsx"),sheetName="newsheet",append=TRUE)
-
-
+write_xlsx(tablita_BOG,paste0("Bogota1.xlsx"))
+write_xlsx(tablita_CAJ,paste0("Cajica1.xlsx"))
+write_xlsx(tablita_CHI,paste0("Chia1.xlsx"))
+write_xlsx(tablita_CAL,paste0("Calera1.xlsx"))
+write_xlsx(tablita_ROS,paste0("Rosales1.xlsx"))
+write_xlsx(tablita_FAC,paste0("Facatativa1.xlsx"))
+write_xlsx(tablita_FUN,paste0("Funza1.xlsx"))
+write_xlsx(tablita_GAC,paste0("Gachancipa1.xlsx"))
+write_xlsx(tablita_MAD,paste0("Madrid1.xlsx"))
+write_xlsx(tablita_MOS,paste0("Mosquera1.xlsx"))
+write_xlsx(tablita_SIB,paste0("Sibate1.xlsx"))
+write_xlsx(tablita_SOA,paste0("Soacha1.xlsx"))
+write_xlsx(tablita_SOP,paste0("Sopo1.xlsx"))
+write_xlsx(tablita_TOC,paste0("Tocancipa1.xlsx"))
+write_xlsx(tablita_ZIP,paste0("Zipaquira1.xlsx"))
 
 ######
 
