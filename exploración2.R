@@ -193,7 +193,7 @@ EM21F$SEC[EM21F$DIV == "99"] <- "Actividades de organizaciones y entidades extra
 ######
 # Municipios
 
-EM21F$MPIO_NAME <- vector(mode='character',length=dim(EM21)[1])
+EM21F$MPIO_NAME <- vector(mode='character',length=dim(EM21F)[1])
 EM21F$MPIO_NAME[EM21F$MPIO == 11001] <- "Bogotá"
 EM21F$MPIO_NAME[EM21F$MPIO == 25740] <- "Sibaté"
 EM21F$MPIO_NAME[EM21F$MPIO == 25473] <- "Mosquera"
