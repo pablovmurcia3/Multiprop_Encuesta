@@ -7,14 +7,15 @@ library(openxlsx)
                                       #  Leer datos
 ################################################################################
 
-encuesta<- "C:\\Users\\karme\\Desktop\\Prácticas\\Datos\\Encuesta Multiproposito\\20221109EM2021_publica.rds"
+encuesta<- "C:\\Users\\karme\\Desktop\\Prácticas\\Datos\\Encuesta Multiproposito\\Microdatos\\Multiproposito.rds"
 EM21 <- readRDS(encuesta)
 
-adicionales <- "C:\\Users\\karme\\Desktop\\Prácticas\\Datos\\Encuesta Multiproposito\\20221116_variables_adicionales2021_RDS.rds"
+adicionales <- "C:\\Users\\karme\\Desktop\\Prácticas\\Datos\\Encuesta Multiproposito\\Microdatos\\Adicionales.rds"
 EM21_plus <- readRDS(adicionales)
 
-base <- "C:\\Users\\karme\\Desktop\\Prácticas\\Datos\\Encuesta Multiproposito\\EM21F.rds"
+base<- "C:\\Users\\karme\\Desktop\\Prácticas\\Datos\\Encuesta Multiproposito\\Microdatos\\Multiproposito_completa.rds"
 EM21F <- readRDS(base)
+
 
 
 # ViviendA
