@@ -11,15 +11,54 @@ EM21F <- readRDS(base)
 
 library(dplyr)
 
+######################### NOMBRES ##############################################
+
+EM21F$MPIO_NAME <- vector(mode='character',length=dim(EM21F)[1])
+EM21F$MPIO_NAME[EM21F$MPIO == 11001] <- "Bogotá"
+EM21F$MPIO_NAME[EM21F$MPIO == 25740] <- "Sibaté"
+EM21F$MPIO_NAME[EM21F$MPIO == 25473] <- "Mosquera"
+EM21F$MPIO_NAME[EM21F$MPIO == 25290] <- "Fusagasugá"
+EM21F$MPIO_NAME[EM21F$MPIO == 25214] <- "Cota"
+EM21F$MPIO_NAME[EM21F$MPIO == 25175] <- "Chía"
+EM21F$MPIO_NAME[EM21F$MPIO == 25758] <- "Sopó"
+EM21F$MPIO_NAME[EM21F$MPIO == 25785] <- "Tabio"
+EM21F$MPIO_NAME[EM21F$MPIO == 25898] <- "Zipacón"
+EM21F$MPIO_NAME[EM21F$MPIO == 25754] <- "Soacha"
+EM21F$MPIO_NAME[EM21F$MPIO == 25126] <- "Cajicá"
+EM21F$MPIO_NAME[EM21F$MPIO == 25817] <- "Tocancipá"
+EM21F$MPIO_NAME[EM21F$MPIO == 25430] <- "Madrid"
+EM21F$MPIO_NAME[EM21F$MPIO == 25286] <- "Funza"
+EM21F$MPIO_NAME[EM21F$MPIO == 25260] <- "El Rosal"
+EM21F$MPIO_NAME[EM21F$MPIO == 25099] <- "Bojacá"
+EM21F$MPIO_NAME[EM21F$MPIO == 25799] <- "Tenjo"
+EM21F$MPIO_NAME[EM21F$MPIO == 25899] <- "Zipaquirá"
+EM21F$MPIO_NAME[EM21F$MPIO == 25269] <- "Facatativá"
+EM21F$MPIO_NAME[EM21F$MPIO == 25769] <- "Subachoque"
+EM21F$MPIO_NAME[EM21F$MPIO == 25377] <- "La Calera"
+EM21F$MPIO_NAME[EM21F$MPIO == 25295] <- "Gachancipá"
+
+EM21F <- rename(EM21F, Estrato = NVCBP11AA)
+EM21F <- rename(EM21F, Sexo = NPCEP5)
+EM21F <- rename(EM21F, Edad = NPCEP4)
+
 ########################### FILTROS ############################################
 
 Poblacion venezolana <- filter(NPCEP13D==1 | NPCEP16D_1==1)
-Municipio <- group_by(MPIO)
-Localidad <- group_by(COD_LOCALIDAD)
-UPZ <- group_by(COD_UPZ_GRUPO)
-Estrato <- group_by(NVCBP11AA)
-Sexo <- group_by(NPCEP5)
-Edad <- group_by(NPCEP4)
+Municipio <- group_by(MPIO_NAME)
+Localidad <- group_by(NOMBRE_LOCALIDAD)
+UPZ <- group_by(NOMBRE_UPZ_GRUPO)
+Estrato <- group_by(Estrato)
+Sexo <- group_by(Sexo)
+Edad <- group_by(Edad)
+Retornados <- filter(NPCEP_5==1 | NPCEP_5==2 | NPCEP_5==3)  *Poseen documentos colombianos
+
+
+######################## VIVIENDA ##############################################
+Viv <- EM21F %>% distinct(DIRECTORIO, .keep_all = TRUE)
+
+
+Tipo <- Viv %>% group_by(Estrato, NVCBP10) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% summarise(no = sum(FEX_C)) %>% arrange(no)
+Tenencia 
 
 
 
@@ -29,6 +68,7 @@ Edad <- group_by(NPCEP4)
 
 
 
+########################### HOGARES ############################################
 
 
 
@@ -38,38 +78,7 @@ Edad <- group_by(NPCEP4)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+########################### PERSONAS ###########################################
 
 
 
