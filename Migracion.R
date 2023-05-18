@@ -52,13 +52,17 @@ Sexo <- group_by(Sexo)
 Edad <- group_by(Edad)
 Retornados <- filter(NPCEP_5==1 | NPCEP_5==2 | NPCEP_5==3)  *Poseen documentos colombianos
 
+library(tidyr)
 
 ######################## VIVIENDA ##############################################
 Viv <- EM21F %>% distinct(DIRECTORIO, .keep_all = TRUE)
 
 
-Tipo <- Viv %>% group_by(Estrato, NVCBP10) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% summarise(no = sum(FEX_C)) %>% arrange(no)
-Tenencia 
+Tipo <- Viv %>% group_by(NOMBRE_LOCALIDAD, NVCBP10) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% summarise(no = sum(FEX_C)) %>% arrange(no)
+
+a <- Viv$NVCBP10 %>% pivot_wider(names_from = MPIO_NAME, values_from = NVCBP10)
+tabla <- d %>%
+  pivot_wider(names_from = Respuesta, values_from = Respuesta, values_fn = length)
 
 
 
@@ -69,7 +73,9 @@ Tenencia
 
 
 ########################### HOGARES ############################################
+Hog <- EM21F %>% distinct(DIRECTORIO_HOG, .keep_all = TRUE)
 
+Tenencia <- Hog %>% group_by(MPIO_NAME, NHCCP1) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% summarise(no = sum(FEX_C)) %>% arrange(no)
 
 
 
@@ -79,6 +85,12 @@ Tenencia
 
 
 ########################### PERSONAS ###########################################
+
+
+
+
+
+
 
 
 
