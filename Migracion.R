@@ -86,13 +86,24 @@ Tipo <- Viv %>% filter(MPIO_NAME=="Bogotá") %>% group_by(NOMBRE_UPZ_GRUPO) %>% 
 Hog <- EM21F %>% distinct(DIRECTORIO_HOG, .keep_all = TRUE)
 
 
-Municipio <- Hog %>% group_by(MPIO_NAME) %>% filter(N_tipo_vivienda==1) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% summarise(no = sum(FEX_C)) %>% arrange(no)
+Municipio <- Hog %>% group_by(MPIO_NAME) %>% filter(NHCCP44==1) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% summarise(no = sum(FEX_C)) %>% arrange(no)
 
-Localidad <- Hog %>% filter(MPIO_NAME=="Bogotá")  %>% filter(N_tipo_vivienda==1) %>% group_by(NOMBRE_LOCALIDAD) %>% filter(NPCEP13D==1 | NPCEP16D_1==1)  %>% summarise(no = sum(FEX_C))
+Localidad <- Hog %>% filter(MPIO_NAME=="Bogotá")  %>% filter(NHCCP44==1) %>% group_by(NOMBRE_LOCALIDAD) %>% filter(NPCEP13D==1 | NPCEP16D_1==1)  %>% summarise(no = sum(FEX_C))
 
-UPZ <- Hog %>% filter(MPIO_NAME=="Bogotá") %>% filter(N_tipo_vivienda==1) %>% group_by(NOMBRE_UPZ_GRUPO) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% summarise(no = sum(FEX_C)) 
+UPZ <- Hog %>% filter(MPIO_NAME=="Bogotá") %>% filter(NHCCP44==1) %>% group_by(NOMBRE_UPZ_GRUPO) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% summarise(no = sum(FEX_C)) 
 
 Estrato <- Hog %>% group_by(Estrato, NHCCPCTRL2) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% summarise(no = sum(FEX_C)) 
+
+
+
+Municipio <- Hog %>% filter(NHCCP44==1) %>% group_by(MPIO_NAME, NHCCP44A) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% summarise(no = sum(FEX_C)) %>% arrange(no)
+
+Localidad <- Hog %>% filter(MPIO_NAME=="Bogotá") %>% filter(NHCCP44==1) %>% group_by(NOMBRE_LOCALIDAD, NHCCP44A) %>% filter(NPCEP13D==1 | NPCEP16D_1==1)  %>% summarise(no = sum(FEX_C))
+
+UPZ <- Hog %>% filter(MPIO_NAME=="Bogotá") %>% filter(NHCCP44==1) %>% group_by(NOMBRE_UPZ_GRUPO, NHCCP44A) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% summarise(no = sum(FEX_C)) 
+
+
+
 
 
 
@@ -112,6 +123,11 @@ Deficit habita <- N_deficit_habitacional
 Deficit cuali <- N_deficit_cualitativo
 Deficit cuanti <- N_deficit_cuantitativo
 Componentes deficit cuanti <- N_tipo_vivienda, N_deficit_paredes, N_cohabitacion, N_hacinamiento_critico
+Componentes deficit cuali <- N_hacinamientomit_jer, N_pisos_jer, N_cocina_jer, N_agua_jer, N_alcantarillado_jer,
+                             N_energia_jer, N_recoleccion_jer
+Carro <- NHCCP41
+Moto <- NHCCP44
+
 
 
 
