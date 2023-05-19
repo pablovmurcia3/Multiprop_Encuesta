@@ -50,6 +50,7 @@ UPZ <- group_by(NOMBRE_UPZ_GRUPO)
 Estrato <- group_by(Estrato)
 Sexo <- group_by(Sexo)
 Edad <- group_by(Edad)
+
 Retornados <- filter(NPCEP_5==1 | NPCEP_5==2 | NPCEP_5==3)  *Poseen documentos colombianos
 
 library(tidyr)
@@ -57,43 +58,83 @@ library(tidyr)
 ######################## VIVIENDA ##############################################
 Viv <- EM21F %>% distinct(DIRECTORIO, .keep_all = TRUE)
 
+Municipio <- Viv %>% group_by(MPIO_NAME, NVCBP16) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% summarise(no = sum(FEX_C)) %>% arrange(no)
 
-Tipo <- Viv %>% group_by(NOMBRE_LOCALIDAD, NVCBP10) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% summarise(no = sum(FEX_C)) %>% arrange(no)
+Localidad <- Viv %>% filter(MPIO_NAME=="Bogotá") %>% group_by(NOMBRE_LOCALIDAD, NVCBP16) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% summarise(no = sum(FEX_C))
 
-a <- Viv$NVCBP10 %>% pivot_wider(names_from = MPIO_NAME, values_from = NVCBP10)
-tabla <- d %>%
-  pivot_wider(names_from = Respuesta, values_from = Respuesta, values_fn = length)
+UPZ <- Viv %>% filter(MPIO_NAME=="Bogotá") %>% group_by(NOMBRE_UPZ_GRUPO, NVCBP16) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% summarise(no = sum(FEX_C))
 
-
-
+Estrato <- Viv %>% group_by(Estrato, NVCBP13) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% summarise(no = sum(FEX_C)) %>% arrange(no)
 
 
+clase <- CLASE
+Tipo de viv <- NVCBP10
+material pared <- NVCBP12
+Material piso <- NVCBP13
+Negocio en la vivienda <- NVCBP9
+Hogares por vivienda <- NVCBP16
 
+
+
+Tipo <- Viv %>% group_by(MPIO_NAME, NVCBP10) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% summarise(no = sum(FEX_C)) %>% arrange(no)
+
+Tipo <- Viv %>% filter(MPIO_NAME=="Bogotá") %>% group_by(NOMBRE_UPZ_GRUPO) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(NVCBP10==4) %>% summarise(no = sum(FEX_C)) %>% arrange(no)
 
 
 
 ########################### HOGARES ############################################
 Hog <- EM21F %>% distinct(DIRECTORIO_HOG, .keep_all = TRUE)
 
-Tenencia <- Hog %>% group_by(MPIO_NAME, NHCCP1) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% summarise(no = sum(FEX_C)) %>% arrange(no)
+
+Municipio <- Hog %>% group_by(MPIO_NAME) %>% filter(N_tipo_vivienda==1) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% summarise(no = sum(FEX_C)) %>% arrange(no)
+
+Localidad <- Hog %>% filter(MPIO_NAME=="Bogotá")  %>% filter(N_tipo_vivienda==1) %>% group_by(NOMBRE_LOCALIDAD) %>% filter(NPCEP13D==1 | NPCEP16D_1==1)  %>% summarise(no = sum(FEX_C))
+
+UPZ <- Hog %>% filter(MPIO_NAME=="Bogotá") %>% filter(N_tipo_vivienda==1) %>% group_by(NOMBRE_UPZ_GRUPO) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% summarise(no = sum(FEX_C)) 
+
+Estrato <- Hog %>% group_by(Estrato, NHCCPCTRL2) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% summarise(no = sum(FEX_C)) 
 
 
 
+Estrato <- Hog %>% group_by(NOMBRE_UPZ_GRUPO, NPCEP6) %>% summarise(no = sum(FEX_C)) %>% arrange(no)
 
 
+Tenencia <- NHCCP1
+Acueducto <- NHCDP1
+Alcantarillado <- NHCDP3
+Basura <- NHCDP5
+Energia <- NHCDP9
+Gas Natural <- NHCDP15 
+Internet <- NHCDP27
+Nacionalidad <- NPCEP11A
+Personas por hogar <- NHCCPCTRL2
+Deficit habita <- N_deficit_habitacional
+Deficit cuali <- N_deficit_cualitativo
+Deficit cuanti <- N_deficit_cuantitativo
+Componentes deficit cuanti <- N_tipo_vivienda, N_deficit_paredes, N_cohabitacion, N_hacinamiento_critico
 
 
 
 ########################### PERSONAS ###########################################
 
+Municipio <- EM21F %>% group_by(MPIO_NAME) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% summarise(no = sum(FEX_C)) %>% arrange(no)
+
+Localidad <- EM21F %>% filter(MPIO_NAME=="Bogotá") %>% group_by(NOMBRE_LOCALIDAD) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% summarise(no = sum(FEX_C))
+
+UPZ <- EM21F %>% filter(MPIO_NAME=="Bogotá") %>% group_by(NOMBRE_UPZ_GRUPO) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% summarise(no = sum(FEX_C))
+
+Estrato <- EM21F %>% group_by(Estrato) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% summarise(no = sum(FEX_C)) %>% arrange(no)
 
 
+Hijos <- EM21F %>% filter(MPIO_NAME=="Bogotá") %>% group_by(NOMBRE_LOCALIDAD, DIRECTORIO_HOG) %>% filter(NPCEP6==3) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% summarise(no = n())
+Hijoss <- EM21F %>% filter(MPIO_NAME=="Bogotá") %>% group_by(NOMBRE_LOCALIDAD, DIRECTORIO_HOG) %>% filter(NPCEP6==3) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% summarise(no = sum(FEX_C))
 
 
+install.packages("writexl")
+library(writexl)
 
-
-
-
+write_xlsx(Hijos, "C:/Users/karme/Desktop/Prácticas/Datos/Encuesta Multiproposito/Microdatos/hijos.xlsx")
+write_xlsx(Hijoss, "C:/Users/karme/Desktop/Prácticas/Datos/Encuesta Multiproposito/Microdatos/hijoss.xlsx")
 
 ############### EDUCACIÓN POR FUERA DEL MUNICIPIO ##############################
 EST <- EM21F[EM21F$NPCHP2==1,]
