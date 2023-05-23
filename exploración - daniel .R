@@ -1,18 +1,21 @@
 memory.limit(size = 10000)
 library(dplyr)
+library(openxlsx)
+
 
 ################################################################################
                                       #  Leer datos
 ################################################################################
 
-encuesta<- "C:\\Users\\karme\\Desktop\\Prácticas\\Datos\\Encuesta Multiproposito\\20221109EM2021_publica.rds"
+encuesta<- "C:\\Users\\karme\\Desktop\\Prácticas\\Datos\\Encuesta Multiproposito\\Microdatos\\Multiproposito.rds"
 EM21 <- readRDS(encuesta)
 
-adicionales <- "C:\\Users\\karme\\Desktop\\Prácticas\\Datos\\Encuesta Multiproposito\\20221116_variables_adicionales2021_RDS.rds"
+adicionales <- "C:\\Users\\karme\\Desktop\\Prácticas\\Datos\\Encuesta Multiproposito\\Microdatos\\Adicionales.rds"
 EM21_plus <- readRDS(adicionales)
 
-base <- "C:\\Users\\karme\\Desktop\\Prácticas\\Datos\\Encuesta Multiproposito\\EM21F.rds"
+base<- "C:\\Users\\karme\\Desktop\\Prácticas\\Datos\\Encuesta Multiproposito\\Microdatos\\Multiproposito_completa.rds"
 EM21F <- readRDS(base)
+
 
 
 # ViviendA
@@ -208,7 +211,9 @@ sort(table(EM21F$SEC))
 
 
 
-######
+###############################################################################
+                  #Juventud
+###############################################################################
 
 EM_JOV <- EM21[EM21$NPCEP4 >= 14 & EM21$NPCEP4 <= 28 ,]
 
@@ -216,6 +221,8 @@ EM_JOV <- EM21[EM21$NPCEP4 >= 14 & EM21$NPCEP4 <= 28 ,]
 sort(table(EM_JOV$SEC))
 
 library(dplyr)
+
+a <- EST %>% filter(NPCHP13==2) %>% group
 
 tablita_sec <- EM_JOV %>% group_by(SEC) %>% summarise(no = length(SEC))  %>% arrange(no)
 
@@ -244,36 +251,12 @@ tablita_CLASE <- EM_JOV %>% group_by(NPCKP16_COD4)%>% summarise(no = length(DIV_
 tablita_CLASE <- EM_JOV %>% filter() %>% group_by(NPCKP16_COD4)%>% summarise(no = length(DIV_n))  %>% arrange(no)
 
 
-###############################################################################
-
-Comercio al por menor (incluso el comercio al por menor de combustibles), excepto el de vehículos automotores y motocicletas
-Actividades de servicios de comidas y bebidas
-Actividades administrativas y de apoyo de oficina y otras actividades de apoyo a las empresas
-Actividades de atención de la salud humana
-
-
-
-
-Desagregadas por clase
-
-
-
-
-
-###############################################################################
-
-
-
-
-
-
-
 ################################################################################
                                 #  diccionarios
 ################################################################################
 
 
-EM21F$MPIO_NAME <- vector(mode='character',length=dim(EM21)[1])
+EM21F$MPIO_NAME <- vector(mode='character',length=dim(EM21F)[1])
 EM21F$MPIO_NAME[EM21F$MPIO == 11001] <- "Bogota"
 EM21F$MPIO_NAME[EM21F$MPIO == 25740] <- "Sibate"
 EM21F$MPIO_NAME[EM21F$MPIO == 25473] <- "Mosquera"
@@ -299,14 +282,8 @@ EM21F$MPIO_NAME[EM21F$MPIO == 25295] <- "Gachancipa"
 
 
 ################################################################################
-                              #  Mercado laboral
+                              #  Separación de la data
 ################################################################################
-sum(EM21$, na.rm = TRUE)
-EM21$FL
-class(EM21$NPCEP4)
-
-
-sort(unique(EM21[EM21$FL == 1,]$NPCEP4))
 
 # por municipios
 
@@ -361,7 +338,6 @@ tabla_a <- EM21F %>% group_by(EM21F$MPIO_NAME) %>% summarise(Mean = mean(NPCKP23
 ###############################################################################
 
 # Número de personas por hogar
-library(openxlsx)
 tabla1 <- EM21F %>% group_by(EM21F$MPIO_NAME, EM21F$NVCBP11AA)  %>% summarise(Promedio = mean(NHCCPCTRL2, na.rm = T))
 write.xlsx(tabla1, 'C:\\Users\\karme\\Desktop\\Prácticas\\Datos\\Encuesta Multiproposito', colNames= TRUE, overwrite = TRUE)
 
@@ -372,4 +348,83 @@ EM21F$CLASE <- vector(mode='character',length=dim(EM21F)[1])
 EM21F$CLASE[EM21F$NPCKP23>0] <- "Clase alta"
 
 tabla2 <- bog %>% group_by(bog$NOMBRE_LOCALIDAD, bog$NVCBP16) %>% summarise(Promedio = sum(NHCCPCTRL2, na.rm = T))
+
+municipios <- c(table(EM21F$MPIO_NAME))
+
+
+######### EDUCACIÓN POR FUERA DEL MUNICIPIO 
+EST <- EM21F[EM21F$NPCHP2==1,]
+
+Bog <- EST %>% filter(MPIO == 11001) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(NPCHP13==2) %>% group_by(NPCHP13B) %>% summarise(no = sum(FEX_C)) %>% arrange(no)
+Mos <- EST %>% filter(MPIO == 25473) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(NPCHP13==2) %>% group_by(NPCHP13B) %>% summarise(no = sum(FEX_C))
+Chi <- EST %>% filter(MPIO == 25175) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(NPCHP13==2) %>% group_by(NPCHP13B) %>% summarise(no = sum(FEX_C))
+Cot <- EST %>% filter(MPIO == 25214) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(NPCHP13==2) %>% group_by(NPCHP13B) %>% summarise(no = sum(FEX_C))
+ERS <- EST %>% filter(MPIO == 25260) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(NPCHP13==2) %>% group_by(NPCHP13B) %>% summarise(no = sum(FEX_C))
+FUN <- EST %>% filter(MPIO == 25286) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(NPCHP13==2) %>% group_by(NPCHP13B) %>% summarise(no = sum(FEX_C))
+Fus <- EST %>% filter(MPIO == 25290) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(NPCHP13==2) %>% group_by(NPCHP13B) %>% summarise(no = sum(FEX_C))
+LCL <- EST %>% filter(MPIO == 25377) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(NPCHP13==2) %>% group_by(NPCHP13B) %>% summarise(no = sum(FEX_C))
+MAD <- EST %>% filter(MPIO == 25430) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(NPCHP13==2) %>% group_by(NPCHP13B) %>% summarise(no = sum(FEX_C))
+SOA <- EST %>% filter(MPIO == 25754) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(NPCHP13==2) %>% group_by(NPCHP13B) %>% summarise(no = sum(FEX_C))
+SOP <- EST %>% filter(MPIO == 25758) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(NPCHP13==2) %>% group_by(NPCHP13B) %>% summarise(no = sum(FEX_C))
+TAB <- EST %>% filter(MPIO == 25785) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(NPCHP13==2) %>% group_by(NPCHP13B) %>% summarise(no = sum(FEX_C))
+TOC <- EST %>% filter(MPIO == 25817) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(NPCHP13==2) %>% group_by(NPCHP13B) %>% summarise(no = sum(FEX_C)) 
+ZIP <- EST %>% filter(MPIO == 25899) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(NPCHP13==2) %>% group_by(NPCHP13B) %>% summarise(no = sum(FEX_C))
+
+
+############ TRABAJO POR FUERA DEL MUNICIPIO
+OCUP <- EM21F[EM21F$N_ocupados==1,]
+
+Bog <- OCUP %>% filter(MPIO == 11001) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(NPCKPA46==2) %>% group_by(NPCKP46AC) %>% summarise(no = sum(FEX_C)) %>% arrange(no)
+Chia <- OCUP %>% filter(MPIO == 25175) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(NPCKPA46==2) %>% group_by(NPCKP46AC) %>% summarise(no = sum(FEX_C)) %>% arrange(no)
+Boj <- OCUP %>% filter(MPIO == 25099) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(NPCKPA46==2) %>% group_by(NPCKP46AC) %>% summarise(no = sum(FEX_C)) %>% arrange(no)
+Caj <- OCUP %>% filter(MPIO == 25126) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(NPCKPA46==2) %>% group_by(NPCKP46AC) %>% summarise(no = sum(FEX_C)) %>% arrange(no)
+Cot <- OCUP %>% filter(MPIO == 25214) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(NPCKPA46==2) %>% group_by(NPCKP46AC) %>% summarise(no = sum(FEX_C)) %>% arrange(no)
+ElR <- OCUP %>% filter(MPIO == 25260) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(NPCKPA46==2) %>% group_by(NPCKP46AC) %>% summarise(no = sum(FEX_C)) %>% arrange(no)
+Fac <- OCUP %>% filter(MPIO == 25269) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(NPCKPA46==2) %>% group_by(NPCKP46AC) %>% summarise(no = sum(FEX_C)) %>% arrange(no)
+Fun <- OCUP %>% filter(MPIO == 25286) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(NPCKPA46==2) %>% group_by(NPCKP46AC) %>% summarise(no = sum(FEX_C)) %>% arrange(no)
+Fus <- OCUP %>% filter(MPIO == 25290) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(NPCKPA46==2) %>% group_by(NPCKP46AC) %>% summarise(no = sum(FEX_C)) %>% arrange(no)
+Gac <- OCUP %>% filter(MPIO == 25295) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(NPCKPA46==2) %>% group_by(NPCKP46AC) %>% summarise(no = sum(FEX_C)) %>% arrange(no)
+Lac <- OCUP %>% filter(MPIO == 25377) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(NPCKPA46==2) %>% group_by(NPCKP46AC) %>% summarise(no = sum(FEX_C)) %>% arrange(no)
+Mad <- OCUP %>% filter(MPIO == 25430) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(NPCKPA46==2) %>% group_by(NPCKP46AC) %>% summarise(no = sum(FEX_C)) %>% arrange(no)
+Mos <- OCUP %>% filter(MPIO == 25473) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(NPCKPA46==2) %>% group_by(NPCKP46AC) %>% summarise(no = sum(FEX_C)) %>% arrange(no)
+Sib <- OCUP %>% filter(MPIO == 25740) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(NPCKPA46==2) %>% group_by(NPCKP46AC) %>% summarise(no = sum(FEX_C)) %>% arrange(no)
+Soa <- OCUP %>% filter(MPIO == 25754) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(NPCKPA46==2) %>% group_by(NPCKP46AC) %>% summarise(no = sum(FEX_C)) %>% arrange(no)
+Sop <- OCUP %>% filter(MPIO == 25758) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(NPCKPA46==2) %>% group_by(NPCKP46AC) %>% summarise(no = sum(FEX_C)) %>% arrange(no)
+Sub <- OCUP %>% filter(MPIO == 25769) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(NPCKPA46==2) %>% group_by(NPCKP46AC) %>% summarise(no = sum(FEX_C)) %>% arrange(no)
+Tab <- OCUP %>% filter(MPIO == 25785) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(NPCKPA46==2) %>% group_by(NPCKP46AC) %>% summarise(no = sum(FEX_C)) %>% arrange(no)
+Ten <- OCUP %>% filter(MPIO == 25799) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(NPCKPA46==2) %>% group_by(NPCKP46AC) %>% summarise(no = sum(FEX_C)) %>% arrange(no)
+Toc <- OCUP %>% filter(MPIO == 25817) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(NPCKPA46==2) %>% group_by(NPCKP46AC) %>% summarise(no = sum(FEX_C)) %>% arrange(no)
+Zip <- OCUP %>% filter(MPIO == 25898) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(NPCKPA46==2) %>% group_by(NPCKP46AC) %>% summarise(no = sum(FEX_C)) %>% arrange(no)
+Zipq <- OCUP %>% filter(MPIO == 25899) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(NPCKPA46==2) %>% group_by(NPCKP46AC) %>% summarise(no = sum(FEX_C)) %>% arrange(no)
+
+
+
+
+
+
+
+
+Bog <- EST %>% filter(MPIO == 11001) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(NPCHP13==2) %>% group_by(NPCHP13B) %>% summarise(no = sum(FEX_C)) %>% arrange(no)
+Mos <- EST %>% filter(MPIO == 25473) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(NPCHP13==2) %>% group_by(NPCHP13B) %>% summarise(no = sum(FEX_C))
+Chi <- EST %>% filter(MPIO == 25175) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(NPCHP13==2) %>% group_by(NPCHP13B) %>% summarise(no = sum(FEX_C))
+Cot <- EST %>% filter(MPIO == 25214) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(NPCHP13==2) %>% group_by(NPCHP13B) %>% summarise(no = sum(FEX_C))
+ERS <- EST %>% filter(MPIO == 25260) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(NPCHP13==2) %>% group_by(NPCHP13B) %>% summarise(no = sum(FEX_C))
+FUN <- EST %>% filter(MPIO == 25286) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(NPCHP13==2) %>% group_by(NPCHP13B) %>% summarise(no = sum(FEX_C))
+Fus <- EST %>% filter(MPIO == 25290) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(NPCHP13==2) %>% group_by(NPCHP13B) %>% summarise(no = sum(FEX_C))
+LCL <- EST %>% filter(MPIO == 25377) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(NPCHP13==2) %>% group_by(NPCHP13B) %>% summarise(no = sum(FEX_C))
+MAD <- EST %>% filter(MPIO == 25430) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(NPCHP13==2) %>% group_by(NPCHP13B) %>% summarise(no = sum(FEX_C))
+SOA <- EST %>% filter(MPIO == 25754) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(NPCHP13==2) %>% group_by(NPCHP13B) %>% summarise(no = sum(FEX_C))
+SOP <- EST %>% filter(MPIO == 25758) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(NPCHP13==2) %>% group_by(NPCHP13B) %>% summarise(no = sum(FEX_C))
+TAB <- EST %>% filter(MPIO == 25785) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(NPCHP13==2) %>% group_by(NPCHP13B) %>% summarise(no = sum(FEX_C))
+TOC <- EST %>% filter(MPIO == 25817) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(NPCHP13==2) %>% group_by(NPCHP13B) %>% summarise(no = sum(FEX_C)) 
+ZIP <- EST %>% filter(MPIO == 25899) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(NPCHP13==2) %>% group_by(NPCHP13B) %>% summarise(no = sum(FEX_C))
+
+
+
+
+
+
+
+
+
 
