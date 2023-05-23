@@ -39,7 +39,6 @@ EM21F$MPIO_NAME[EM21F$MPIO == 25295] <- "Gachancipá"
 
 EM21F <- rename(EM21F, Estrato = NVCBP11AA)
 EM21F <- rename(EM21F, Sexo = NPCEP5)
-EM21F <- rename(EM21F, Edad = NPCEP4)
 
 
 ######################## VIVIENDA ##############################################
@@ -71,30 +70,32 @@ Hog <- EM21F %>% distinct(DIRECTORIO_HOG, .keep_all = TRUE)
 
 
 
-Tenencia <- NHCCP1
-Acueducto <- NHCDP1
-Alcantarillado <- NHCDP3
-Basura <- NHCDP5
-Energia <- NHCDP9
-Gas Natural <- NHCDP15 
-Internet <- NHCDP27
-Nacionalidad <- NPCEP11A
-Personas por hogar <- NHCCPCTRL2
-Deficit habita <- N_deficit_habitacional
-Deficit cuali <- N_deficit_cualitativo
-Deficit cuanti <- N_deficit_cuantitativo
-Componentes deficit cuanti <- N_tipo_vivienda, N_deficit_paredes, N_cohabitacion, N_hacinamiento_critico
-Componentes deficit cuali <- N_hacinamientomit_jer, N_pisos_jer, N_cocina_jer, N_agua_jer, N_alcantarillado_jer,
-N_energia_jer, N_recoleccion_jer
-Carro <- NHCCP41
-Moto <- NHCCP44
+# Tenencia <- NHCCP1
+# Acueducto <- NHCDP1
+# Alcantarillado <- NHCDP3
+# Basura <- NHCDP5
+# Energia <- NHCDP9
+# Gas Natural <- NHCDP15 
+# Internet <- NHCDP27
+# Nacionalidad <- NPCEP11A
+# Personas por hogar <- NHCCPCTRL2
+# Deficit habita <- N_deficit_habitacional
+# Deficit cuali <- N_deficit_cualitativo
+# Deficit cuanti <- N_deficit_cuantitativo
+# Componentes deficit cuanti <- N_tipo_vivienda, N_deficit_paredes, N_cohabitacion, N_hacinamiento_critico
+# Componentes deficit cuali <- N_hacinamientomit_jer, N_pisos_jer, N_cocina_jer, N_agua_jer, N_alcantarillado_jer,
+# N_energia_jer, N_recoleccion_jer
+# Carro <- NHCCP41
+# Moto <- NHCCP44
+# Condiciones de vida <- NHCLP3
+# Condiciones de vida hace 5 <- NHCLP5
 
 
-Municipio <- Hog %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% group_by(MPIO_NAME) %>% filter(NHCCP44==1)  %>% summarise(no = sum(FEX_C)) %>% arrange(no)
+Municipio <- Hog %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% group_by(MPIO_NAME, NHCLP5)  %>% summarise(no = sum(FEX_C)) 
 
-Localidad <- Hog %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(MPIO_NAME=="Bogotá")  %>% filter(NHCCP44==1) %>% group_by(NOMBRE_LOCALIDAD)  %>% summarise(no = sum(FEX_C))
+Localidad <- Hog %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(MPIO_NAME=="Bogotá") %>% group_by(NOMBRE_LOCALIDAD, NHCLP5)  %>% summarise(no = sum(FEX_C))
 
-UPZ <- Hog %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>%  filter(MPIO_NAME=="Bogotá") %>% filter(NHCCP44==1) %>% group_by(NOMBRE_UPZ_GRUPO)  %>% summarise(no = sum(FEX_C)) 
+UPZ <- Hog %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>%  filter(MPIO_NAME=="Bogotá") %>% group_by(NOMBRE_UPZ_GRUPO, NHCLP5)  %>% summarise(no = sum(FEX_C)) 
 
 
 Estrato <- Hog %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% group_by(Estrato, NHCCPCTRL2) %>% summarise(no = sum(FEX_C)) 
@@ -102,24 +103,51 @@ Estrato <- Hog %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% group_by(Estrato, NHC
 
 ########################### PERSONAS ###########################################
 
-Municipio <- EM21F %>% group_by(MPIO_NAME) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% summarise(no = sum(FEX_C)) %>% arrange(no)
+# retornado (nacionalidad) <- NPCEP11D
+# afiliacion salud <- NPCFP1
+# regimen salud <- NPCFP2
+# Discapacidad motora <- NPCFP21A1==1 | NPCFP21A1==2 | NPCFP21A2==1 | NPCFP21A2==2
+# Discapacidad visual <-  NPCFP21A3==1 | NPCFP21A3==2
+# Discapacidad auditiva <- NPCFP21A4==1 | NPCFP21A4==2 
+# Discapacidad al hablar <-NPCFP21A5==1 | NPCFP21A5==2 
+# Discapacidad mental <- NPCFP21A6==1 | NPCFP21A6==2 | NPCFP21A7==1 | NPCFP21A7==2
+# Nivel educativo <- NPCHP4
+# Principal actividad <- NPCKP1
+# Lugar de trabajo <- NPCKP44a
+# Tiempo de viaje al trabajo <- NPCKP46B
+# Tiempo de viaje al estudio <- NPCHP19  
 
-Localidad <- EM21F %>% filter(MPIO_NAME=="Bogotá") %>% group_by(NOMBRE_LOCALIDAD) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% summarise(no = sum(FEX_C))
-
-UPZ <- EM21F %>% filter(MPIO_NAME=="Bogotá") %>% group_by(NOMBRE_UPZ_GRUPO) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% summarise(no = sum(FEX_C))
-
-Estrato <- EM21F %>% group_by(Estrato) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% summarise(no = sum(FEX_C)) %>% arrange(no)
 
 
-Hijos <- EM21F %>% filter(MPIO_NAME=="Bogotá") %>% group_by(NOMBRE_LOCALIDAD, DIRECTORIO_HOG) %>% filter(NPCEP6==3) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% summarise(no = n())
-Hijoss <- EM21F %>% filter(MPIO_NAME=="Bogotá") %>% group_by(NOMBRE_LOCALIDAD, DIRECTORIO_HOG) %>% filter(NPCEP6==3) %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% summarise(no = sum(FEX_C))
+Municipio <- EM21F %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% group_by(MPIO_NAME)   %>% summarise(no = sum(FEX_C)) 
+
+Localidad <- EM21F %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(MPIO_NAME=="Bogotá") %>% group_by(NOMBRE_LOCALIDAD, NPCKP44A) %>% summarise(no = sum(FEX_C))
+
+UPZ <- EM21F %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(MPIO_NAME=="Bogotá") %>% group_by(NOMBRE_UPZ_GRUPO, NPCKP44A) %>% summarise(no = sum(FEX_C))
+
+Estrato <- EM21F %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% group_by(Estrato) %>% summarise(no = sum(FEX_C)) %>% arrange(no)
+
+
+
+
+
+
+Municipio <- EM21F %>% filter(N_ocupados==1) %>% group_by(MPIO_NAME) %>% summarise(no = weighted.mean(NPCKP46B, FEX_C, na.rm = TRUE)) 
+
+Localidad <- EM21F %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(MPIO_NAME=="Bogotá") %>% group_by(NOMBRE_LOCALIDAD) %>% summarise(no = weighted.mean(NPCHP19, FEX_C, na.rm = TRUE))
+
+UPZ <- EM21F %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(MPIO_NAME=="Bogotá") %>% group_by(NOMBRE_UPZ_GRUPO) %>% summarise(no = weighted.mean(NPCHP19, FEX_C, na.rm = TRUE))
+
+
 
 
 install.packages("writexl")
 library(writexl)
 
-write_xlsx(Hijos, "C:/Users/karme/Desktop/Prácticas/Datos/Encuesta Multiproposito/Microdatos/hijos.xlsx")
-write_xlsx(Hijoss, "C:/Users/karme/Desktop/Prácticas/Datos/Encuesta Multiproposito/Microdatos/hijoss.xlsx")
+write_xlsx(Municipio, "C:/Users/karme/Desktop/Prácticas/Datos/Encuesta Multiproposito/Microdatos/municipio.xlsx")
+write_xlsx(Localidad, "C:/Users/karme/Desktop/Prácticas/Datos/Encuesta Multiproposito/Microdatos/localidad.xlsx")
+write_xlsx(UPZ, "C:/Users/karme/Desktop/Prácticas/Datos/Encuesta Multiproposito/Microdatos/upz.xlsx")
+
 
 ############### EDUCACIÓN POR FUERA DEL MUNICIPIO ##############################
 
