@@ -45,6 +45,7 @@ EM21F <- rename(EM21F, Sexo = NPCEP5)
 
 Viv <- EM21F %>% distinct(DIRECTORIO, .keep_all = TRUE)
 
+a
 clase <- CLASE
 Tipo de viv <- NVCBP10
 material pared <- NVCBP12
