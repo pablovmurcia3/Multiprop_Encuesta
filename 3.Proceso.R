@@ -22,6 +22,8 @@ Estrato <- Viv %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>%
 
 Hog <- EM21F %>% distinct(DIRECTORIO_HOG, .keep_all = TRUE)
 
+a <- EM21F %>% filter(NPCEP13D==1 | NPCEP16D_1==1)
+
 
 Municipio <- Hog %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>%
   group_by(MPIO_NAME, N_pobre_monetario)  %>% summarise(no = sum(FEX_C)) 
@@ -120,8 +122,6 @@ durables <- Hog %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>%
 
 df<- list(alimentos, bebidas, Vivienda, recreación, educación, durables)
 upz <-Reduce(function(x,y) merge(x,y, by = c("NOMBRE_UPZ_GRUPO"),all =TRUE), df)
-
-
 
 
 
