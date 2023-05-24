@@ -19,20 +19,40 @@ Estrato <- Viv %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>%
   group_by(Estrato, NVCBP13) %>% summarise(no = sum(FEX_C)) %>% arrange(no)
 
 ######################## HOGARES ##############################################
+
 Hog <- EM21F %>% distinct(DIRECTORIO_HOG, .keep_all = TRUE)
 
 
-
 Municipio <- Hog %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>%
-  group_by(MPIO_NAME, NHCLP5)  %>% summarise(no = sum(FEX_C)) 
+  group_by(MPIO_NAME, N_pobre_monetario)  %>% summarise(no = sum(FEX_C)) 
+
+
+# con porcentaje################
+Municipio <- Hog %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>%
+  group_by(MPIO_NAME, N_pobre_monetario)  %>% summarise(no = sum(FEX_C)) %>%
+  mutate(freq = round(no/sum(no),3))
+#################
+
 
 Localidad <- Hog %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>%
-  filter(MPIO_NAME=="Bogotá") %>% group_by(NOMBRE_LOCALIDAD, NHCLP5)  %>%
+  filter(MPIO_NAME=="Bogotá") %>% group_by(NOMBRE_LOCALIDAD, N_pobre_monetario)  %>%
   summarise(no = sum(FEX_C))
+
+# con porcentaje################
+Localidad <- Hog %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>%
+  group_by(NOMBRE_LOCALIDAD, N_pobre_monetario)  %>% summarise(no = sum(FEX_C)) %>%
+  mutate(freq = round(no/sum(no),3))
+#################
 
 UPZ <- Hog %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% 
   filter(MPIO_NAME=="Bogotá") %>% group_by(NOMBRE_UPZ_GRUPO, NHCLP5)  %>%
   summarise(no = sum(FEX_C)) 
+
+# con porcentaje################
+UPZ <- Hog %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>%
+  group_by(NOMBRE_UPZ_GRUPO, N_pobre_monetario)  %>% summarise(no = sum(FEX_C)) %>%
+  mutate(freq = round(no/sum(no),3))
+#################
 
 Estrato <- Hog %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% 
   group_by(Estrato, NHCCPCTRL2) %>% summarise(no = sum(FEX_C)) 
@@ -124,3 +144,8 @@ Estrato <- EM21F %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>%
 
 
 
+##### escritura
+
+write_xlsx(Municipio,paste0("M.xlsx"))
+write_xlsx(Localidad,paste0("L.xlsx"))
+write_xlsx(UPZ,paste0("U.xlsx"))

@@ -3,7 +3,7 @@
 
 ################################################################################
 
-
+# Estrato <- NVCBP11AA
 
 ######################## VIVIENDA ##############################################
 
@@ -13,7 +13,6 @@
 # Material piso <- NVCBP13
 # Negocio en la vivienda <- NVCBP9
 # Hogares por vivienda <- NVCBP16
-
 
 ######################## hogares ##############################################
 
@@ -38,6 +37,9 @@
 # Condiciones de vida hace 5 <- NHCLP5
 # Ingreso per capita = N_ingpcugarr 
 # Ingreso total = N_ingtotugarr 
+# pobreza = N_pobre_monetario
+# subsidio familia en acción = NPCHP9B 
+# 
 
 
 

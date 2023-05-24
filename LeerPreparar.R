@@ -19,7 +19,8 @@
   
   ###################### paquetes #################################
   
-  
+  install.packages("data.table") # Install data.table package
+  library("data.table")          # Load data.table
   library(dplyr)
   library(writexl)
   
@@ -220,6 +221,7 @@
   EM21F$NPCKPA46[is.na(EM21F$NPCKPA46)] <- "No se encuentra trabajando"
   
   
-  
+  rm(EM21)
+  rm(EM21_plus)
   
   
