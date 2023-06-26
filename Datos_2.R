@@ -52,9 +52,16 @@ Hog$Ingresopc <- cut(Hog$N_ingpcugarr,
                                       5000000, 33000000))
 
 Ingresopc <- Hog %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% group_by(Ingresopc, MPIO_NAME) %>% 
-  summarise(no = sum(FEX_C)) %>%
-  mutate(freq = round(no/sum(no),3))
+  summarise(no = sum(FEX_C)) %>% mutate(freq = round(no/sum(no),3))
 
 write_xlsx(Ingresopc,paste0("ing.xlsx"))
 
+
+
+Hog$arriendo <- cut(Hog$NHCCP10, breaks = c(-1 , 250000, 500000, 750000,1000000, 1500000,
+                                     2000000, 2500000, 3000000, 3500000, 4000000, 22000000))
+
+Arriendo <- Hog %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% group_by(MPIO_NAME, arriendo) %>% 
+  summarise(no = sum(FEX_C)) %>% mutate(freq = round(no/sum(no),3))
+write_xlsx(Arriendo,paste0("arri.xlsx"))
 
