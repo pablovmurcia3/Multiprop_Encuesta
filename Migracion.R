@@ -102,7 +102,7 @@ Localidad <- Hog %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(MPIO_NAME=="
 UPZ <- Hog %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>%  filter(MPIO_NAME=="Bogotá") %>% filter(N_deficit_cualitativo==1) %>% group_by(NOMBRE_UPZ_GRUPO)  %>% summarise(no = sum(FEX_C)) 
 
 
-Estrato <- Hog_BS %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(N_deficit_cualitativo==1) %>% group_by(Estrato, MPIO) %>% summarise(no = sum(FEX_C)) 
+Estrato <- Hog %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>% filter(N_deficit_cualitativo==1) %>% group_by(Estrato, MPIO) %>% summarise(no = sum(FEX_C)) 
 
 
 ########################### PERSONAS ###########################################
