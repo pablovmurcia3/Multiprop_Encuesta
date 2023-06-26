@@ -8,7 +8,7 @@ names(EM21_plus)[grep("directorio_per", names(EM21_plus))] <- "DIRECTORIO_PER"
 
 EM21F <- merge(EM21, EM21_plus, by = c("DIRECTORIO_PER"),all =TRUE)
 
-EM21F <- rename(EM21F, Edad = NPCEP4)
+
 library(dplyr)
 
 # municipios
@@ -206,9 +206,14 @@ EM21F$NPCKPA46[is.na(EM21F$NPCKPA46)] <- "No se encuentra trabajando"
 
 
 
+# EDAD = Edad
+# Sector económico = SEC
+# Donde estudian = NPCHP13
+# Donde estudian = NPCKPA46
+# Ingreso per capita = N_ingpcugarr - Ingreso percapita por unidad de gasto con imputación de arriendo a propietarios y usufructuarios
+# Ingreso total = N_ingtotugarr 
 
 # codigueo
-
 
 Municipio <- EM21F  %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>%
   group_by(MPIO_NAME, Edad) %>% summarise(no = sum(FEX_C)) %>% arrange(no)
@@ -218,11 +223,84 @@ Localidad <- EM21F %>% filter(MPIO_NAME=="Bogotá") %>%
   summarise(no = sum(FEX_C))
 
 UPZ <- EM21F %>% filter(MPIO_NAME=="Bogotá") %>%
-  filter(NPCEP13D==1 | NPCEP16D_1==1) %>% group_by(NOMBRE_UPZ_GRUPO, Edad)  %>%
+  filter(NPCEP13D==1 | NPCEP16D_1==1) %>% group_by(NOMBRE_UPZ_GRUPO, SEC)  %>%
   summarise(no = sum(FEX_C))
 
 
+
+# Ingreso per capita
+
+
+Hog <- EM21F %>% distinct(DIRECTORIO_HOG, .keep_all = TRUE)
+
+Municipio <- Hog %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>%
+  group_by(MPIO_NAME) %>% 
+  summarise(no = weighted.mean(N_ingtotugarr, FEX_C, na.rm =TRUE))
+
+Localidad <- Hog %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>%
+  group_by(NOMBRE_LOCALIDAD) %>% 
+  summarise(no = weighted.mean(N_ingtotugarr, FEX_C, na.rm =TRUE))
+
+UPZ <- Hog %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>%
+  group_by(NOMBRE_UPZ_GRUPO) %>% 
+  summarise(no = weighted.mean(N_ingtotugarr, FEX_C, na.rm =TRUE))
+
+
+
+
+library(writexl)
+
 write_xlsx(Municipio,paste0("M.xlsx"))
 write_xlsx(Localidad,paste0("L.xlsx"))
-write_xlsx(Municipio,paste0("M.xlsx"))
+write_xlsx(UPZ,paste0("U.xlsx"))
 
+
+# Ingreso total
+
+
+
+# gasto 
+Hog <- EM21F %>% distinct(DIRECTORIO_HOG, .keep_all = TRUE)
+
+
+alimentos <- Hog %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>%
+  group_by(NOMBRE_UPZ_GRUPO, directorio_hog) %>% 
+  summarise(no = weighted.mean(N_gm_alimentos, FEX_C, na.rm =TRUE)) %>% 
+  group_by(NOMBRE_UPZ_GRUPO) %>% 
+  summarise(alimentos = mean(no,  na.rm =TRUE))
+
+bebidas <- Hog %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>%
+  group_by(NOMBRE_UPZ_GRUPO, directorio_hog) %>% 
+  summarise(no = weighted.mean(N_gm_bebidas, FEX_C, na.rm =TRUE)) %>% 
+  group_by(NOMBRE_UPZ_GRUPO) %>% 
+  summarise(bebidas = mean(no,  na.rm =TRUE))
+
+Vivienda <- Hog %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>%
+  group_by(NOMBRE_UPZ_GRUPO, directorio_hog) %>% 
+  summarise(no = weighted.mean(N_gm_vivienda, FEX_C, na.rm =TRUE)) %>% 
+  group_by(NOMBRE_UPZ_GRUPO) %>% 
+  summarise(Vivienda = mean(no,  na.rm =TRUE))
+
+recreación <- Hog %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>%
+  group_by(NOMBRE_UPZ_GRUPO, directorio_hog) %>% 
+  summarise(no = weighted.mean(N_gm_recrea, FEX_C, na.rm =TRUE)) %>% 
+  group_by(NOMBRE_UPZ_GRUPO) %>% 
+  summarise(recreación = mean(no,  na.rm =TRUE))
+
+educación <- Hog %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>%
+  group_by(NOMBRE_UPZ_GRUPO, directorio_hog) %>% 
+  summarise(no = weighted.mean(N_gm_educ_hog, FEX_C, na.rm =TRUE)) %>% 
+  group_by(NOMBRE_UPZ_GRUPO) %>% 
+  summarise(educación = mean(no,  na.rm =TRUE))
+
+durables <- Hog %>% filter(NPCEP13D==1 | NPCEP16D_1==1) %>%
+  group_by(NOMBRE_UPZ_GRUPO, directorio_hog) %>% 
+  summarise(no = weighted.mean(N_gm_durable, FEX_C, na.rm =TRUE)) %>% 
+  group_by(NOMBRE_UPZ_GRUPO) %>% 
+  summarise(durables = mean(no,  na.rm =TRUE))
+
+
+df<- list(alimentos, bebidas, Vivienda, recreación, educación, durables)
+upz <-Reduce(function(x,y) merge(x,y, by = c("NOMBRE_UPZ_GRUPO"),all =TRUE), df)
+
+write_xlsx(upz,paste0("u.xlsx"))
